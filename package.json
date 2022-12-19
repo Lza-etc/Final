@@ -1,0 +1,29 @@
+{
+  "name": "cetgo",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "@emotion/react": "11.10.5",
+    "@emotion/styled": "11.10.5",
+    "@mui/material": "5.11.0",
+    "bootstrap": "5.2.3",
+    "leaflet": "1.5.1",
+    "leaflet-routing-machine": "3.2.12",
+    "lrm-google": "1.0.1",
+    "react": "18.2.0",
+    "react-bootstrap": "2.7.0",
+    "react-dom": "18.2.0",
+    "react-leaflet": "2.0.1",
+    "react-router-dom": "6.5.0",
+    "react-scripts": "1.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

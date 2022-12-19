@@ -1,0 +1,160 @@
+.navbar {
+  width: 100%;
+  height: 100%;
+  background-color: #05386B;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Ibarra Real Nova', serif;
+}
+
+.navbar .leftSide {
+  flex: 25%;
+  height: 100%;
+  display: flex;
+  align-items: left;
+  padding-left: 50px;
+  font-size: 30px;
+  /* color: #ffe8d6!important;  */
+  
+}
+
+.navbar .leftSide.navbar-brand {
+  color: #EDF5E1!important;
+}
+
+.drop-down{
+  background: blue;
+  color:aquamarine;
+}
+
+.nav-sec{
+  cursor: pointer;
+}
+
+.dept-nav{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100px;
+  right: 10px;
+  z-index: 1000;
+  border: 2px solid ;
+  background-color: #05386B;
+  color: #EDF5E1;
+  width: 200px;
+  height:125px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dept-nav input {
+  width: 90%;
+}
+
+.dept-nav-btn button{
+  border-radius: 5px;
+  border-color: #05386B;
+  background-color: #379683;
+  color: #EDF5E1;
+  padding: 5px 14px;
+  margin: 2px 2px;
+}
+
+.dept-nav-loc{
+  margin: 4px;
+}
+
+
+.rightSide {
+  flex: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 20px;
+  font-display: bold;
+  color: #ffe8d6!important;  
+}
+
+.navbar-light .navbar-nav .nav-link{
+  color: #EDF5E1!important;
+}
+
+.navbar-light .navbar-toggler-icon {
+  filter: invert(98%) sepia(1%) saturate(276%) hue-rotate(298deg) brightness(117%) contrast(100%)
+}
+
+/* .navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 20px;
+}
+
+.navbar .rightSide button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+} */
+
+/* .navbar .rightSide svg {
+  font-size: 40px;
+}
+
+.navbar #open {
+  padding-left: 0px;
+}
+.navbar #open img {
+  display: none;
+}
+
+.navbar #close img {
+  display: inherit;
+}
+
+.navbar #open .hiddenLinks {
+  display: inherit;
+  margin-left: 30px;
+}
+
+.navbar #close .hiddenLinks {
+  display: none;
+}
+
+.navbar #open a {
+  width: 70px;
+  margin: 5px;
+}
+@media only screen and (max-width: 900px) {
+  .navbar .rightSide a {
+    width: 70px;
+  }
+  .navbar .leftSide {
+    padding-left: 50px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar .rightSide a {
+    display: none;
+  }
+
+  .navbar .rightSide {
+    justify-content: flex-end;
+    padding-right: 50px;
+  }
+
+  .navbar .rightSide button {
+    display: inherit;
+  }
+} */
+
+@media only screen and (min-width: 600px) {
+  .navbar .rightSide button {
+    display: none;
+  }
+
+  .hiddenLinks {
+    display: none;
+  }
+}

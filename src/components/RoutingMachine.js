@@ -2,7 +2,7 @@ import { MapLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import "lrm-google";
-// import "lrm-graphhopper"
+import "lrm-graphhopper"
 import { withLeaflet } from "react-leaflet";
 
 class Routing extends MapLayer {
@@ -27,7 +27,7 @@ class Routing extends MapLayer {
         ]
       },
       // addWaypoints: false,
-      // router: new L.Routing.graphHopper('83ca6b35-864a-446a-9261-d95847652111','foot'),
+      router: new L.Routing.graphHopper('83ca6b35-864a-446a-9261-d95847652111','foot'),
       draggableWaypoints: true,
       fitSelectedRoutes: true,
       showAlternatives: true

@@ -5,7 +5,8 @@ import { Nav, Button, Form } from "react-bootstrap";
 import location from "../assets/location.png";
 import data from "../assets/cet_main.json";
 import Routing from "../components/RoutingMachine";
-import "../styles/CetMap.css";
+// import { useGeolocated } from "react-geolocated";
+import "../styles/Navi.css";
 
 export default class Navigation extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class Navigation extends Component {
       endLa: this.props.endLa,
       endLng: this.props.endLng
     };
+    // this.usergeolocation();
   }
   saveMap = (map) => {
     // console.log(map);
@@ -32,6 +34,20 @@ export default class Navigation extends Component {
     });
   };
 
+  // usergeolocation = () => {
+  //   const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+  //       useGeolocated({
+  //           positionOptions: {
+  //               enableHighAccuracy: false,
+  //           },
+  //           userDecisionTimeout: 5000,
+  //       });
+  //       this.setState({
+  //         startLa:coords.latitude,
+  //         startLo:coords.longitude
+  //       })
+  //     }
+  
   handleNavi = (event) => {
     event.preventDefault(); // Prevent default submission
 

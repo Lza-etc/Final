@@ -1,71 +1,12 @@
-.map_base {
-  padding: 0cm;
+.search-btn{
+    position: fixed;
+    top: 80px;
+    left: 50px;
+    z-index: 214748363;
+    
 }
-.search-btn {
-  position: fixed;
-  top: 80px;
-  left: 50px;
-  z-index: 214748363;
-}
-#map
-  > div
-  > div.leaflet-pane.leaflet-map-pane
-  > div.leaflet-pane.leaflet-tile-pane
-  > div
-  > div
-  > img {
-  padding: 0px;
-}
-
-.dept-nav {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 8px;
-  left: 50px;
-  z-index: 214748363;
-  border: 2px solid;
-  background-color: #05386b;
-  color: #edf5e1;
-  width: 290px;
-  height: 125px;
-  align-items: center;
-  cursor: pointer;
-}
-
-.dept-nav input {
-  width: 90%;
-}
-
-.dept-nav-btn button {
-  border-radius: 5px;
-  border-color: #05386b;
-  background-color: #379683;
-  color: #edf5e1;
-  padding: 5px 14px;
-  margin: 2px 2px;
-}
-
-.dept-nav-loc {
-  margin: 4px;
-}
-
-.rightSide {
-  flex: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-size: 20px;
-  font-display: bold;
-  color: #ffe8d6 !important;
-}
-
-.navbar-light .navbar-nav .nav-link {
-  color: #edf5e1 !important;
-}
-
-.navbar-light .navbar-toggler-icon {
-  filter: invert(98%) sepia(1%) saturate(276%) hue-rotate(298deg)
-    brightness(117%) contrast(100%);
+.userloc{
+    z-index:214748363;
+    align-items: center;
+    margin-left: 20cm;
 }

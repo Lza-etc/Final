@@ -6,13 +6,13 @@ import {Nav,Button,Form,Col,Row} from "react-bootstrap";
 import "../styles/Department.css"
 import  {Link} from "react-router-dom"
   
-  
 
 const DeptMap= (props) => {
   // Map state:
   const [mapInstance, setMapInstance] = useState(null);
   const [marker, setMarker] = useState(null);
   const [value,setValue]=useState(null)
+  
 
   // Map refs:
   const mapRef = useRef(null);
@@ -89,30 +89,33 @@ const DeptMap= (props) => {
       
      <div className='d-flex dept-main'>
       <div className='dept-left text-center'>
-            <Link to="/CSE" className='left-nav-links'>
+            <Link to="/" className='left-nav-links'>
             CSE
             </Link>
-            <Link to="/MCA" className='left-nav-links'>
+            <Link to="/" className='left-nav-links'>
             MCA
             </Link>
             <Link to="/CIVIL" className='left-nav-links'>
             CIVIL
             </Link>
-            <Link to="/" className='left-nav-links'>
+            <Link to="/EEE" className='left-nav-links'>
             EEE
             </Link>
       </div>
      <div className='p-0 dept-right' >
-         <Form className="d-flex" >
-         <Form.Control
-           type="search"
-           placeholder="Search"
-           className="me-2"
-           aria-label="Search"
-           onChange={onChange}
-         />
-         <Button variant="outline-success" onClick={handleClick}>Search</Button>
-       </Form>
+      {props.nav?
+      <Form className="d-flex" >
+      <Form.Control
+        type="search"
+        placeholder="Search"
+        className="me-2"
+        aria-label="Search"
+        onChange={onChange}
+      />
+      <Button variant="outline-success" onClick={handleClick}>Search</Button>
+    </Form>:null
+      }
+         
        <div id="map" ></div>
      </div>  
     </div>

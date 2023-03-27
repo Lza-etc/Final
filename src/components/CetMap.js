@@ -6,15 +6,9 @@ import location from "../assets/location.png";
 import data from "../assets/cet_main.json";
 import Routing from "./RoutingMachine";
 import "../styles/CetMap.css";
-// export class RecenterAutomatically extends Component{
-//   const  = ({lat,lng}) => {
-//     const map = useMap();
-//      useEffect(() => {
-//        map.setView([lat, lng]);
-//      }, [lat, lng]);
-//      return null;
-//    }
-// }
+
+// 8129767412
+
 export default class CetMap extends Component {
   state = {
     lat: 8.54592,
@@ -24,8 +18,8 @@ export default class CetMap extends Component {
     marker: null,
     map: null,
     srch: false,
-    startLa: this.props.startLa,
-    startLo: this.props.startLng,
+    endLa: this.props.startLa,
+    endLo: this.props.startLng,
     popup: ""
   };
 
@@ -64,8 +58,8 @@ export default class CetMap extends Component {
         console.log(x, y, this.state.val);
         this.setState({
           srch: true,
-          startLa: x,
-          startLo: y,
+          endLa: x,
+          endLo: y,
           popup: this.state.val
         });
         // this.map.setView(new L.LatLng(x, y), 19);
@@ -76,8 +70,8 @@ export default class CetMap extends Component {
   };
   recenter = () => {
     this.setState({
-      lat: this.state.startLa,
-      lng: this.state.startLo,
+      lat: this.state.endLa,
+      lng: this.state.endLo,
       zoom: 18.5
     });
   };
@@ -86,13 +80,13 @@ export default class CetMap extends Component {
       val: event
     });
   };
-
   render() {
     const position = [this.state.lat, this.state.lng];
     var myIcon = L.icon({
       iconUrl: location,
       iconSize: [50, 50]
     });
+  
     return (
       <div className=" map-container">
         <div className="search-btn ">
@@ -125,9 +119,9 @@ export default class CetMap extends Component {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             {this.state.srch && (
-              <>
+              <div>
                 <Marker
-                  position={[this.state.startLa, this.state.startLo]}
+                  position={[this.state.endLa, this.state.endLo]}
                   icon={myIcon}
                   onAdd={(e) => {
                     e.target.openPopup();
@@ -140,7 +134,7 @@ export default class CetMap extends Component {
                 >
                   <Popup> {this.state.popup}</Popup>
                 </Marker>
-              </>
+              </div>
             )}
             {this.state.navi && <Routing map={this.map} />}
           </Map>

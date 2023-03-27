@@ -1,16 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Eee1 from "../assets/images/Eee0.png";
-import Eee2 from "../assets/images/Eee1.png";
-import Eee3 from "../assets/images/Eee2.png";
-import Eee0 from "../assets/images/Eeeb.png";
 import "../styles/Eee.css";
 import { Slider } from "@mui/material";
 
 function Eee() {
   const canvasRef = useRef(null);
-  const floorData = [Eee0, Eee1, Eee2, Eee3];
-  const [currentImage, setCurrentImage] = useState(Eee0);
+  const floorData = [ "images/Eeeb.png", "images/Eee0.png", "images/Eee1.png","images/Eee2.png"];
+  const [currentImage, setCurrentImage] = useState( "images/Eeeb.png");
   const [floorImg, setFloorImage] = useState(0);
 
   useEffect(() => {

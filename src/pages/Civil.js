@@ -1,15 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import ce0 from "../assets/images/CE0.png";
-import ce1 from "../assets/images/CE1.png";
-import ce2 from "../assets/images/CE2.png";
 import "../styles/Civil.css";
 import { Slider } from "@mui/material";
 
 function Civil() {
   const canvasRef = useRef(null);
-  const floorData = [ce0, ce1, ce2];
-  const [currentImage, setCurrentImage] = useState(ce0);
+  const floorData = [ "images/CE0.png","images/CE1.png" ,"images/CE2.png"];
+  const [currentImage, setCurrentImage] = useState("images/CE0.png");
   const [floorImg, setFloorImage] = useState(0);
 
   useEffect(() => {

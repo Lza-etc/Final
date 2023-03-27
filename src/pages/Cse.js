@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import cse0 from "../assets/images/CSE0.png";
-import cse1 from "../assets/images/CSE1.png";
-import cse2 from "../assets/images/CSE2.png";
+// import cse0 from "../assets/images/CSE0.png";
+// import cse1 from "../assets/images/CSE1.png";
+// import cse2 from "../assets/images/CSE2.png";
 import {Nav,Button,Form} from "react-bootstrap";
 import "../styles/Cse.css";
 import { Slider } from "@mui/material";
 
 function Cse() {
   const canvasRef = useRef(null);
-  const floorData = [cse0, cse1, cse2];
-  const [currentImage, setCurrentImage] = useState(cse0);
+  const floorData = ["images/CSE0.png", "images/CSE1.png", "images/CSE2.png"];
+  const [currentImage, setCurrentImage] = useState("images/CSE0.png");
   const [floorImg, setFloorImage] = useState(0);
   const [locationImg,setLocationImg]=useState(0);
 
@@ -21,6 +21,7 @@ function Cse() {
     const img = new Image();
     img.src = currentImage;
     context.clearRect(0, 0, canvas.width, canvas.height);
+    
     img.onload = () => {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;

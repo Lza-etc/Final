@@ -1,15 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import mca0 from "../assets/images/MCA0.png"
-import mca1 from "../assets/images/MCA1.png"
-import mca2 from "../assets/images/MCA2.png"
 import  {Link} from "react-router-dom"
 import "../styles/Mca.css"
 import { Slider } from "@mui/material";
 
 function Mca(){
   const canvasRef = useRef(null);
-  const floorData = [mca0, mca1, mca2];
-  const [currentImage, setCurrentImage] = useState(mca0);
+  const floorData = ["images/MCA0.png", "images/MCA1.png", "images/MCA2.png"];
+  const [currentImage, setCurrentImage] = useState("images/MCA0.png");
   const [floorImg, setFloorImage] = useState(0);
 
   useEffect(() => {

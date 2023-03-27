@@ -89,10 +89,10 @@ const DeptMap= (props) => {
       
      <div className='d-flex dept-main'>
       <div className='dept-left text-center'>
-            <Link to="/" className='left-nav-links'>
+            <Link to="/CSE" className='left-nav-links'>
             CSE
             </Link>
-            <Link to="/" className='left-nav-links'>
+            <Link to="/MCA" className='left-nav-links'>
             MCA
             </Link>
             <Link to="/CIVIL" className='left-nav-links'>

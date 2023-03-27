@@ -30,8 +30,8 @@ const Org = () => {
             <Box className="org-box-main">
                 <div className="org-left">
                     <div className="left-name">
-                        <img className="logo-img" src="../assets/images/ieee-logo.jpg"/>
-                        <img className="edit-img" src="../assets/images/edit-icon.png"/>
+                        <img className="logo-img" src="images/ieee-logo.jpg"/>
+                        <img className="edit-img" src="images/edit-icon.png"/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -55,7 +55,7 @@ const Org = () => {
                     role, even after their student life.
                     </div>
                     <div className='org-right-img'>
-                        <img className="group-img" src="../assets/images/org.jpg" alt="img" />
+                        <img className="group-img" src="images/org.jpg" alt="img" />
                     </div>
                 </div>
             </Box>

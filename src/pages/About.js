@@ -1,9 +1,7 @@
 import React from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import "../styles/About.css";
-// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
-// import edit from "../assets/images/edit-icon.png";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -36,8 +34,8 @@ const About = () => {
             <Box className="about-box-main">
                 <div className="about-left">
                     <div className="left-name">
-                        <img className="logo-img" src="../assets/images/ieee-logo.jpg"/>
-                        <img className="edit-img" src="../assets/images/edit-icon.png"/>
+                        <img className="logo-img" src="images/ieee-logo.jpg"/>
+                        <img className="edit-img" src="images/edit-icon.png"/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>

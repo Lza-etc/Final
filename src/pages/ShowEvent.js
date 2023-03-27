@@ -38,8 +38,8 @@ const ShowEvent = () => {
             <Box className="se-box-main">
                 <div className="se-left">
                     <div className="left-name">
-                        <img className="logo-img" src="../assets/images/ieee-logo.jpg"/>
-                        <img className="edit-img" src="../assets/images/edit-icon.png"/>
+                        <img className="logo-img" src="images/ieee-logo.jpg"/>
+                        <img className="edit-img" src="images/edit-icon.png"/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -56,7 +56,7 @@ const ShowEvent = () => {
 
                     
                         <div style={{backgroundColor: 'white', width: '215px', height: "fit-content", marginRight: "15px"}}>
-                          <div className='card-image-container'><img src="../assets/images/event1.jpeg" style={{width: "210px", height: "210px"}}/></div>
+                          <div className='card-image-container'><img src="images/event1.jpeg" style={{width: "210px", height: "210px"}}/></div>
                           <div className='card-title'>Eminence</div>
                           <div className='card-venue-container'>
                             <div className='card-venue'>Seminar Hall</div>
@@ -73,7 +73,7 @@ const ShowEvent = () => {
                         </div>
 
                         <div style={{backgroundColor: 'white', width: '215px', height: "fit-content", marginRight: "15px"}}>
-                          <div className='card-image-container'><img src="../assets/images/event2.jpeg" style={{width: "210px", height: "210px"}}/></div>
+                          <div className='card-image-container'><img src="images/event2.jpeg" style={{width: "210px", height: "210px"}}/></div>
                           <div className='card-title'>Hack-a-Week</div>
                           <div className='card-venue-container'>
                             <div className='card-venue'>EEE 203</div>

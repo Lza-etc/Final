@@ -1,18 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import cse0 from "../assets/images/CSE0.png";
-// import cse1 from "../assets/images/CSE1.png";
-// import cse2 from "../assets/images/CSE2.png";
 import {Nav,Button,Form} from "react-bootstrap";
 import "../styles/Cse.css";
 import { Slider } from "@mui/material";
 
 function Cse() {
   const canvasRef = useRef(null);
+  
+  const p1=[[950,700],[2125,700],[2125,900]]
+   const p2=[[950,700],[2125,700]]
+    const p3=[[2125,700],[2125,900]]
   const floorData = ["images/CSE0.png", "images/CSE1.png", "images/CSE2.png"];
   const [currentImage, setCurrentImage] = useState("images/CSE0.png");
   const [floorImg, setFloorImage] = useState(0);
+  const [floorPath, setFloorPath] = useState(p1);
   const [locationImg,setLocationImg]=useState(0);
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -28,12 +31,16 @@ function Cse() {
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
       context.lineWidth = 20; 
       context.strokeStyle = "red";
-      context.beginPath()
-      context.moveTo(950,700)
-      context.lineTo(2125,700)
-      context.lineTo(2125,900)
-      context.stroke()
-      context.closePath()
+      
+      if(floorPath.length!=0){
+        context.beginPath()
+        context.moveTo(floorPath[0][0],floorPath[0][1])
+        for(var i=1;i<floorPath.length;i++){
+          context.lineTo(floorPath[i][0],floorPath[i][1])
+        }
+        context.stroke()
+        context.closePath()
+      }     
     };
   }, [currentImage]);
 
@@ -56,18 +63,25 @@ function Cse() {
     if (val / 50 !== floorImg) {
       setFloorImage(val / 50);
       setCurrentImage(floorData[val / 50]);
+      
+      if(val===0)
+      setFloorPath(p1);
+      else if(val===50)
+        setFloorPath(p2);
+      else if(val===100)
+        setFloorPath(p3);
     }
   };
-  const handleClick = (event) => {
-    event.preventDefault(); // Prevent default submission
-    if (locationImg) {
-      context.drawImage(img, 0, 0, canvas.width, canvas.height);
-    }
-  };
+  // const handleClick = (event) => {
+  //   event.preventDefault(); // Prevent default submission
+  //   if (locationImg) {
+  //     context.drawImage(img, 0, 0, canvas.width, canvas.height);
+  //   }
+  // };
 
-  const onChange = (event) => {
-    setValue(event.target.value);
-  };
+  // const onChange = (event) => {
+  //   setValue(event.target.value);
+  // };
 
   return (
     <div>

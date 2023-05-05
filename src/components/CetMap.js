@@ -6,23 +6,42 @@ import location from "../assets/location.png";
 import data from "../assets/cet_main.json";
 import Routing from "./RoutingMachine";
 import "../styles/CetMap.css";
+import axios from 'axios';
+// import { useFloorData } from '../hooks/useFloorData';
+// import getFloors from "../api/getFloors"
+
 
 // 8129767412
 
 export default class CetMap extends Component {
-  state = {
-    lat: 8.54592,
-    lng: 76.90623,
-    zoom: 17.5,
-    val: null,
-    marker: null,
-    map: null,
-    srch: false,
-    endLa: this.props.startLa,
-    endLo: this.props.startLng,
-    popup: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = { 
+      lat: 8.54592,
+      lng: 76.90623,
+      zoom: 17.5,
+      val: null,
+      marker: null,
+      map: null,
+      srch: false,
+      endLa: this.props.startLa,
+      endLo: this.props.startLng,
+      popup: "",
+      data:[]
+    };
+  }
 
+  async componentDidMount() {
+    try {
+      const response = await axios.get("http://127.0.0.1:5000/floors/cse1");
+      // console.log(response.data); 
+      this.setState({ data: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  
   saveMap = (map) => {
     // console.log(map);
     this.map = map;
@@ -30,7 +49,7 @@ export default class CetMap extends Component {
       map: map
     });
   };
-
+  
   handleSearch = (event) => {
     event.preventDefault(); // Prevent default submission
     if (this.state.marker) {
@@ -38,17 +57,16 @@ export default class CetMap extends Component {
         marker: null
       });
     } else {
-      var f = 0,
-        x,
-        y;
-      data.map((building) => {
+      var f = 0,x,y;
+      var d=this.state.data;
+      d.rooms.map((building) => {
         if (
           this.state.val.toLowerCase() ===
-          building["Building name"].toLowerCase()
+          building["ID"].toLowerCase()
         ) {
           // console.log(building['Building name'],building['x'],building['y'])
-          x = building["x"];
-          y = building["y"];
+          x = building["y"];
+          y = building["x"];
           f = 1;
         }
         return 0;
@@ -82,11 +100,17 @@ export default class CetMap extends Component {
   };
   render() {
     const position = [this.state.lat, this.state.lng];
+    // console.log(useFloorData());
     var myIcon = L.icon({
       iconUrl: location,
       iconSize: [50, 50]
     });
-  
+    const data=this.state.data;
+   
+    if (!data) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div className=" map-container">
         <div className="search-btn ">
@@ -136,6 +160,7 @@ export default class CetMap extends Component {
                 </Marker>
               </div>
             )}
+            
             {this.state.navi && <Routing map={this.map} />}
           </Map>
         </div>

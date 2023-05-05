@@ -7,7 +7,7 @@ import Event from "./pages/Event";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DeptMap from "./components/Department";
 import Mca from "./pages/Mca";
-// import Cse from "./pages/Cse";
+import Cse from "./pages/Cse";
 import Civil from "./pages/Civil";
 import Eee from "./pages/Eee";
 import Profile from "./pages/Profile";
@@ -28,7 +28,7 @@ function App() {
        < Routes >
           <Route path="/" element={<Home nav={nav} />} />
           <Route path="/MCA" element={<Mca/>} />
-          {/* <Route path="/CSE" element={<Cse/>} />  */}
+          <Route path="/CSE" element={<Cse/>} /> 
           <Route path="/Navi" element={<Navigation />} />
           <Route path="/CIVIL" element={<Civil/>} />
           <Route path="/login" element={<Login/>} />

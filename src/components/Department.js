@@ -5,7 +5,7 @@ import data  from "../assets/cet_main.json"
 import {Nav,Button,Form,Col,Row} from "react-bootstrap";
 import "../styles/Department.css"
 import  {Link} from "react-router-dom"
-  
+// import BaseData from "../hooks/getFloorData"
 
 const DeptMap= (props) => {
   // Map state:
@@ -13,7 +13,6 @@ const DeptMap= (props) => {
   const [marker, setMarker] = useState(null);
   const [value,setValue]=useState(null)
   
-
   // Map refs:
   const mapRef = useRef(null);
   const tileRef = useRef(null);

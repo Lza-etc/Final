@@ -20,13 +20,20 @@ import Org from "./pages/Org";
 
 function App() {
   const[nav,setNav]=useState(true)
+  const [startLo,setStarLo]=useState(null);
+  const [startLa,setStarLa]=useState(null);
+  const [endLo,setEndLo]=useState(null);
+  const [endLa,setEndLa]=useState(null);
+  const [navi,setNavi]=useState(false);
+ 
   return (
     <div className="App">
       
       <Router>
-        <Navigationbar nav={nav} setNav={setNav}/>
+        <Navigationbar nav={nav} setNav={setNav} navi={navi} setNavi={setNavi} endLa={endLa} setEndLo={setEndLo} setEndLa={setEndLa} setStarLa={setStarLa
+        } setStarLo={setStarLo} endLo={endLo} startLa={startLa} startLo={startLo}/>
        < Routes >
-          <Route path="/" element={<Home nav={nav} />} />
+          <Route path="/" element={<Home nav={nav} navi={navi} endLa={endLa} endLo={endLo} startLa={startLa} startLo={startLo}/>} />
           <Route path="/MCA" element={<Mca/>} />
           <Route path="/CSE" element={<Cse/>} /> 
           {/* <Route path="/Navi" element={<Navigation />} /> */}

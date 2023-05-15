@@ -10,7 +10,7 @@ class Routing extends MapLayer {
     const map = this.props.map;
     const startLoc = this.props.startLoc;
     const endLoc = this.props.endLoc;
-
+    console.log(startLoc)
     let leafletElement = L.Routing.control({
       waypoints: [
         L.latLng(startLoc[0], startLoc[1]),

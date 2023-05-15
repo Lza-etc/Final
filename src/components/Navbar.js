@@ -1,14 +1,13 @@
 import React,{useState} from 'react'
 import {Navbar,Container,Nav,NavDropdown} from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "../styles/Navbar.css";
+import CetMap from './CetMap';
 
-const  Navigationbar=({nav,setNav}) => {
-  const navigate = useNavigate();
+const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStarLo,endLa,setEndLa,endLo,setEndLo}) => {
   const  [showDeptNav, setShowDeptNav] = useState(false)
-  const [startloc, setStartLoc] = useState(null);
-  const [destiloc,setDestiLoc]=useState(null);
+  const [startloc, setStartLoc] = useState("");
+  const [destiloc,setDestiLoc]=useState("");
   const [isCancelled, setIsCancelled] = useState(false);
 
   const onChangeStart = (event) => {
@@ -54,9 +53,12 @@ const  Navigationbar=({nav,setNav}) => {
             }
           });
           if (fs === 1 && fd===1) {
-            console.log(startLa + " "+startLo + " " +endLa+" "+endLo)
-            navigate('/',  { startLa: startLa, startLo: startLo,destiloc: destiloc,navi:true } );
-            // this.map.setView(new L.LatLng(x, y), 19);
+            setStarLa(startLa);
+            setStarLo(startLo);
+            setEndLa(endLa);
+            setEndLo(endLo);
+            setNavi(true);
+            // console.log(startLa+" "+startLo+"navbar");
           } else if (fs===0){
             
             alert("no such starting location");
@@ -70,36 +72,37 @@ const  Navigationbar=({nav,setNav}) => {
     }
   }
   return (
-        <Navbar  className='navbar' collapseOnSelect expand="lg" >
-          <Container>
-            <Navbar.Brand className='leftSide' href="/" >CETgo</Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className='rightSide'>
-                <Nav.Link href="/dept" onClick={() => {
-                  setNav(true)}}>Department</Nav.Link>
-                <Nav.Link href="/profile">Events</Nav.Link>
-                <div className='nav-sec'onClick={() => {setShowDeptNav(!showDeptNav)}}>Navigation</div>
-                <Nav.Link href="/login">Login</Nav.Link>
-                {/* <NavDropdown title="More" id="collasible-nav-dropdown">
-                  <NavDropdown.Item classname='drop-down'  href="#action/3.1">Emergency Contact</NavDropdown.Item>
-                  <NavDropdown.Item classname='drop-down' href="#action/3.2">Exam Hall Search</NavDropdown.Item>
-                  <NavDropdown.Item classname='drop-down' href="#action/3.3">About Us</NavDropdown.Item>
-                </NavDropdown> */}
-              </Nav>
-            </Navbar.Collapse>
-            <div className='dept-nav' hidden={!showDeptNav}>
+    <Navbar  className='navbar' collapseOnSelect expand="lg" >
+      <Container>
+        <Navbar.Brand className='leftSide' href="/" >CETgo</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className='rightSide'>
+            <Nav.Link href="/dept" onClick={() => {
+              setNav(true)}}>Department</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
+            <div className='nav-sec'onClick={() => {setShowDeptNav(!showDeptNav)}}>Navigation</div>
+            <Nav.Link href="/Login">Login</Nav.Link>
+            <Nav.Link href="/Event">Events</Nav.Link>
+            {/* <NavDropdown title="More" id="collasible-nav-dropdown">
+              <NavDropdown.Item classname='drop-down'  href="#action/3.1">Emergency Contact</NavDropdown.Item>
+              <NavDropdown.Item classname='drop-down' href="#action/3.2">Exam Hall Search</NavDropdown.Item>
+              <NavDropdown.Item classname='drop-down' href="#action/3.3">About Us</NavDropdown.Item>
+            </NavDropdown> */}
+          </Nav>
+        </Navbar.Collapse>
+        <div className='dept-nav' hidden={!showDeptNav}>
             <input className='dept-nav-loc'type="text" value={startloc} onChange={onChangeStart} placeholder="Start Location"/>
             <input className='dept-nav-loc' type="text" value={destiloc} onChange={onChangeDesti} placeholder="Destination"/>
             <div className='dept-nav-btn'>
                 <button onClick={handleCancel}>Cancel</button>
                 <button onClick={handleNavi}>Find Route</button>
             </div>
-        </div>
-          </Container>
-        </Navbar>
-  )
+          </div>
+      </Container>
+    </Navbar>
+)
 }
 
 export default Navigationbar;

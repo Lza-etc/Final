@@ -7,12 +7,10 @@ import location from "../assets/location.png";
 import Routing from "./RoutingMachine";
 import "../styles/CetMap.css";
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
 // import { useFloorData } from '../hooks/useFloorData';
 // import getFloors from "../api/getFloors"
 
 
-// 8129767412
 
 export default class CetMap extends Component {
   constructor(props) {
@@ -25,37 +23,39 @@ export default class CetMap extends Component {
       marker: null,
       map: null,
       srch: false,
-      navi: false,
-      endLa: null,
-      endLo: null,
-      startLa: null,
-      startLo: null,
+      navi: this.props.navi,
+      startLa: this.props.startLa,
+      startLo: this.props.startLo,
+      endLa: this.props.endLa,
+      endLo: this.props.endLo,
       popup: "",
       csedata:[],
       data:[]
     };
   }
-
+  componentDidUpdate(prevProps) {
+    if (prevProps.navi !== this.props.navi) {
+      // Props have changed, update the state
+      if (this.props.navi !== this.state.navi) 
+      this.setState({navi: this.props.navi ,
+        startLa: this.props.startLa,
+        startLo: this.props.startLo,
+        endLa: this.props.endLa,
+        endLo: this.props.endLo       
+      
+      });
+    }
+    // console.log(this.props);
+  }
   async componentDidMount() {
     try {
-      
-      const location = useLocation();
       const response = await axios.get("http://127.0.0.1:5000/floors/cse1");
       const response1 = await axios.get("http://127.0.0.1:5000/depts");
       
       this.setState({ 
         data: response.data.rooms , 
         csedata:response1.data.depts,
-        navi:location.navi,
-        endLa:location.endLa,
-        endLo:location.endLo,
-        startLa:location.startLa,
-        startLo:location.startLo
       });
-       
-
-        // console.log(this.data); 
-        // console.log(this.csedata); 
     } catch (error) {
       console.error(error);
     }
@@ -152,7 +152,6 @@ export default class CetMap extends Component {
       color: '#00FF00',
       fillOpacity: 0.1,
     };
-    // console.log(useFloorData());
     var myIcon = L.icon({
       iconUrl: location,
       iconSize: [50, 50]
@@ -221,7 +220,15 @@ export default class CetMap extends Component {
               </div>
             )}
             
-            {this.state.navi && <Routing map={this.map} />}
+            
+            {this.state.navi && (
+              <Routing
+                map={this.map}
+                startLoc={[this.state.startLa, this.state.startLo]}
+                endLoc={[this.state.endLa, this.state.endLo]}
+              />
+            )}
+
           </Map>
         </div>
       </div>

@@ -1,2 +1,2 @@
-# test3
-Created with CodeSandbox
+# cetgo
+ College Navigation  System

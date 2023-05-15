@@ -1,7 +1,7 @@
 import React from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import "../styles/Profile.css";
-// import ieee from "./ieee-logo.png";
+// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
 // import edit from "../assets/images/edit-icon.png";
 // import bg from "../assets/images/bg.jpeg";
@@ -15,9 +15,9 @@ const Profile = () => {
     const navigateAddEvent = () => {
         navigate('/AddEvent');
     };
-    const navigateLoc = () => {
-        navigate('/Location');
-    };
+    // const navigateLoc = () => {
+    //     navigate('/Location');
+    // };
     const navigateShowEvent = () => {
         navigate('/ShowEvent');
     };
@@ -34,7 +34,7 @@ const Profile = () => {
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
-                        <button onClick={navigateLoc}> LOCATION </button>
+                        {/* <button onClick={navigateLoc}> LOCATION </button> */}
                         <button onClick={navigateShowEvent}> EVENTS </button>
                         <button onClick={navigateAddEvent}> ADD EVENT </button>
                         <button onClick={navigateAbout}> ABOUT </button>

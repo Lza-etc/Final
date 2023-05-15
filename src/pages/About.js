@@ -1,7 +1,9 @@
 import React from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import "../styles/About.css";
+// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
+// import edit from "../assets/images/edit-icon.png";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -20,9 +22,9 @@ const About = () => {
     const navigateAddEvent = () => {
         navigate('/AddEvent');
     };
-    const navigateLoc = () => {
-        navigate('/Location');
-    };
+    // const navigateLoc = () => {
+    //     navigate('/Location');
+    // };
     const navigateShowEvent = () => {
         navigate('/ShowEvent');
     };
@@ -39,7 +41,7 @@ const About = () => {
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
-                        <button onClick={navigateLoc}> LOCATION </button>
+                        {/* <button onClick={navigateLoc}> LOCATION </button> */}
                         <button onClick={navigateShowEvent}> EVENTS </button>
                         <button onClick={navigateAddEvent}> ADD EVENT </button>
                         <button onClick={navigateAbout}> ABOUT </button>

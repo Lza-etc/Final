@@ -16,9 +16,9 @@ const Org = () => {
     const navigateAddEvent = () => {
         navigate('/AddEvent');
     };
-    const navigateLoc = () => {
-        navigate('/Location');
-    };
+    // const navigateLoc = () => {
+    //     navigate('/Location');
+    // };
     const navigateShowEvent = () => {
         navigate('/ShowEvent');
     };
@@ -35,7 +35,7 @@ const Org = () => {
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
-                        <button onClick={navigateLoc}> LOCATION </button>
+                        {/* <button onClick={navigateLoc}> LOCATION </button> */}
                         <button onClick={navigateShowEvent}> EVENTS </button>
                         <button onClick={navigateAddEvent}> ADD EVENT </button>
                         <button onClick={navigateAbout}> ABOUT </button>

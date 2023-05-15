@@ -10,3 +10,7 @@
     align-items: center;
     margin-left: 20cm;
 }
+
+#map > div > div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-tile-pane > div > div> img{
+    padding: 0%;
+}

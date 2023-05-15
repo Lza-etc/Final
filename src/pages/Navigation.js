@@ -3,10 +3,10 @@ import L from "leaflet";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { Nav, Button, Form } from "react-bootstrap";
 import location from "../assets/location.png";
-import data from "../assets/cet_main.json";
 import Routing from "../components/RoutingMachine";
 // import { useGeolocated } from "react-geolocated";
 import "../styles/Navi.css";
+import axios from "axios";
 
 export default class Navigation extends Component {
   constructor(props) {
@@ -22,9 +22,20 @@ export default class Navigation extends Component {
       startLa: this.props.startLa,
       startLo: this.props.startLng,
       endLa: this.props.endLa,
-      endLng: this.props.endLng
+      endLng: this.props.endLng,
+      data:[]
     };
     // this.usergeolocation();
+  }
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get("http://127.0.0.1:5000/floors/cse1");
+      // console.log(response.data); 
+      this.setState({ data: response.data });
+    } catch (error) {
+      console.error(error);
+    }
   }
   saveMap = (map) => {
     // console.log(map);
@@ -57,10 +68,11 @@ export default class Navigation extends Component {
     var ef = 0;
     var ex;
     var ey;
-    data.map((building) => {
+    var d=this.state.data;
+    d.rooms.map((building) => {
       if (
         this.state.startval.toLowerCase() ===
-        building["Building name"].toLowerCase()
+        building["ID"].toLowerCase()
       ) {
         // console.log(building['Building name'],building['x'],building['y'])
         sx = building["x"];

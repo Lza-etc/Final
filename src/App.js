@@ -16,7 +16,7 @@ import AddEvent from "./pages/addevent";
 import ShowEvent from "./pages/ShowEvent";
 import Location from "./pages/Location";
 import Org from "./pages/Org";
-import Navigation from "./pages/Navigation";
+// import Navigation from "./pages/Navigation";
 
 function App() {
   const[nav,setNav]=useState(true)
@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<Home nav={nav} />} />
           <Route path="/MCA" element={<Mca/>} />
           <Route path="/CSE" element={<Cse/>} /> 
-          <Route path="/Navi" element={<Navigation />} />
+          {/* <Route path="/Navi" element={<Navigation />} /> */}
           <Route path="/CIVIL" element={<Civil/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/event" element={<Event/>} />

@@ -1,18 +1,19 @@
-* {
-  all: none;
+*{
+  all:none;
 }
 
 .leaflet-container {
-  width: 100wh;
-  height: 88vh;
-}
-.home {
-  background-color: #000814;
-  color: #caf0f8;
+    width: 100wh; 
+    height: 88vh; 
+  }
+.home{
+    background-color: #000814;
+    color: #CAF0F8;
+    
 }
 
-.map-container {
-  position: relative;
+.map-container{
+  position:relative;
 }
 .search-bar {
   position: absolute;
@@ -22,11 +23,11 @@
   z-index: 10;
 }
 
-.left-sidebar {
-  width: 30wh;
+.left-sidebar{
+  width: 30wh; 
   height: 100vh;
-  color: white;
+  color:white;
   background-color: rgb(54, 148, 108);
   padding: 7px;
-  margin-left: 3px;
+  margin-left:3px;
 }

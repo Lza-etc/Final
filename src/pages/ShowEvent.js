@@ -8,11 +8,11 @@ import ListGroup from 'react-bootstrap/ListGroup';
 // import Typography from '@mui/material/Typography';
 // import { CardActionArea } from '@mui/material';
 import "../styles/ShowEvent.css";
-// import ieee from "C:/Users/LENOVO/OneDrive/Pictures/Documents/extra/Final/src/assets/images/ieee-logo.jpg";
+// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
-// import "../assets/images/edit-icon.png";
-// import  "../assets/images/event1.jpeg";
-// import "../assets/images/event2.jpeg";
+// import edit from "../assets/images/edit-icon.png";
+// import event1 from "../assets/images/event1.jpeg";
+// import event2 from "../assets/images/event2.jpeg";
 
 
 const ShowEvent = () => {
@@ -73,7 +73,7 @@ const ShowEvent = () => {
                         </div>
 
                         <div style={{backgroundColor: 'white', width: '215px', height: "fit-content", marginRight: "15px"}}>
-                          <div className='card-image-container'><img src="images/event2.jpeg" style={{width: "210px", height: "210px"}}/></div>
+                          <div className='card-image-container'><img src="images/event1.jpeg" style={{width: "210px", height: "210px"}}/></div>
                           <div className='card-title'>Hack-a-Week</div>
                           <div className='card-venue-container'>
                             <div className='card-venue'>EEE 203</div>

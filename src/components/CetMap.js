@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import L from "leaflet";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup,Polygon } from "react-leaflet";
 import { Nav, Button, Form } from "react-bootstrap";
 import location from "../assets/location.png";
-import data from "../assets/cet_main.json";
+// import data from "../assets/cet_main.json";
 import Routing from "./RoutingMachine";
 import "../styles/CetMap.css";
 import axios from 'axios';
@@ -27,14 +27,14 @@ export default class CetMap extends Component {
       endLa: this.props.startLa,
       endLo: this.props.startLng,
       popup: "",
-      data:[]
+      data:[],
     };
   }
 
   async componentDidMount() {
     try {
       const response = await axios.get("http://127.0.0.1:5000/floors/cse1");
-      // console.log(response.data); 
+      console.log(response.data); 
       this.setState({ data: response.data });
     } catch (error) {
       console.error(error);
@@ -52,21 +52,26 @@ export default class CetMap extends Component {
   
   handleSearch = (event) => {
     event.preventDefault(); // Prevent default submission
+    console.log("search "+this.state.val);
     if (this.state.marker) {
       this.setState({
         marker: null
       });
     } else {
       var f = 0,x,y;
-      var d=this.state.data;
-      d.rooms.map((building) => {
+      // console.log(this.state.data.rooms)
+      this.state.data.rooms.map((building) => {
+        const regex = /[^a-z0-9]+/gi;
+        const b= building["ID"].replace(regex, "");
         if (
           this.state.val.toLowerCase() ===
-          building["ID"].toLowerCase()
+          b.toLowerCase()
         ) {
-          // console.log(building['Building name'],building['x'],building['y'])
           x = building["y"];
           y = building["x"];
+          this.setState({
+            popup: building["ID"]
+          });
           f = 1;
         }
         return 0;
@@ -77,8 +82,7 @@ export default class CetMap extends Component {
         this.setState({
           srch: true,
           endLa: x,
-          endLo: y,
-          popup: this.state.val
+          endLo: y
         });
         // this.map.setView(new L.LatLng(x, y), 19);
       } else {
@@ -93,6 +97,10 @@ export default class CetMap extends Component {
       zoom: 18.5
     });
   };
+  handleClick = (event) => {
+    console.log('Clicked polygon:', event.target);
+    // Do something when polygon is clicked
+  };
   onChange = (event) => {
     this.setState({
       val: event
@@ -100,6 +108,14 @@ export default class CetMap extends Component {
   };
   render() {
     const position = [this.state.lat, this.state.lng];
+    const polygon = [[8.54596, 76.90359 ], [8.54601, 76.90407],  [8.54552, 76.90412],[8.54547, 76.90364]];
+    const polygonStyle = {
+      fillColor: '#00FF00',
+      weight: 1,
+      opacity: 1,
+      color: '#00FF00',
+      fillOpacity: 0.1,
+    };
     // console.log(useFloorData());
     var myIcon = L.icon({
       iconUrl: location,
@@ -156,7 +172,15 @@ export default class CetMap extends Component {
                   // }}
                   // onChange={this.recenter}
                 >
-                  <Popup> {this.state.popup}</Popup>
+                  <Polygon
+                    positions={polygon}
+                    pathOptions={polygonStyle}
+                    eventHandlers={{
+                      click: this.handleClick,
+                    }}
+                  >
+                    <Popup>{this.state.popup}</Popup>
+                  </Polygon>
                 </Marker>
               </div>
             )}

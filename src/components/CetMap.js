@@ -7,6 +7,7 @@ import location from "../assets/location.png";
 import Routing from "./RoutingMachine";
 import "../styles/CetMap.css";
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 // import { useFloorData } from '../hooks/useFloorData';
 // import getFloors from "../api/getFloors"
 
@@ -24,18 +25,37 @@ export default class CetMap extends Component {
       marker: null,
       map: null,
       srch: false,
-      endLa: this.props.startLa,
-      endLo: this.props.startLng,
+      navi: false,
+      endLa: null,
+      endLo: null,
+      startLa: null,
+      startLo: null,
       popup: "",
-      data:[],
+      csedata:[],
+      data:[]
     };
   }
 
   async componentDidMount() {
     try {
+      
+      const location = useLocation();
       const response = await axios.get("http://127.0.0.1:5000/floors/cse1");
-      console.log(response.data); 
-      this.setState({ data: response.data });
+      const response1 = await axios.get("http://127.0.0.1:5000/depts");
+      
+      this.setState({ 
+        data: response.data.rooms , 
+        csedata:response1.data.depts,
+        navi:location.navi,
+        endLa:location.endLa,
+        endLo:location.endLo,
+        startLa:location.startLa,
+        startLo:location.startLo
+      });
+       
+
+        // console.log(this.data); 
+        // console.log(this.csedata); 
     } catch (error) {
       console.error(error);
     }
@@ -60,7 +80,7 @@ export default class CetMap extends Component {
     } else {
       var f = 0,x,y;
       // console.log(this.state.data.rooms)
-      this.state.data.rooms.map((building) => {
+      this.state.data.map((building) => {
         const regex = /[^a-z0-9]+/gi;
         const b= building["ID"].replace(regex, "");
         if (
@@ -71,6 +91,22 @@ export default class CetMap extends Component {
           y = building["x"];
           this.setState({
             popup: building["ID"]
+          });
+          f = 1;
+        }
+        return 0;
+      });
+      this.state.csedata.map((building) => {
+        const regex = /[^a-z0-9]+/gi;
+        const b= building["id"].replace(regex, "");
+        if (
+          this.state.val.toLowerCase() ===
+          b.toLowerCase()
+        ) {
+          x = building["y"];
+          y = building["x"];
+          this.setState({
+            popup: building["name"]
           });
           f = 1;
         }

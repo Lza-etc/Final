@@ -7,6 +7,7 @@ import { Slider } from "@mui/material";
 
 function Cse() {
   const canvasRef = useRef(null);
+  // const sliderRef = useRef(null);
   
   // const p1=[[950,700],[2125,700],[2125,900]]
   //  const p2=[[950,700],[2125,700]]
@@ -19,107 +20,88 @@ function Cse() {
   const [floorImg, setFloorImage] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
   const [locationImg,setLocationImg]=useState(0);
+  const [centerX,setCenterX] =useState(0);
+  const [centerY,setCenterY] =useState(0);
   const loc = sessionStorage.getItem("loc");
-  console.log(loc)
+  const [data,setData]=useState([])
+ 
 
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
-    const fetchData = async () => {
-      try {
-        await axios.post('http://127.0.0.1:5000/shortestpath', { 
-          src:"CS_201",
-          dest:"CS_302",
-          dept:"cse"
-         },{
-          headers: {
-            'Content-Type': 'application/json'
-          }}).then(res=>{
-          console.log(res.data.path);
-
-          var cp1=[],cp2=[],cp3=[],stair=[],cur;
-          var stairx,stairy,x,y;
-          var curp=-1;
-          res.data.path.map((point)=>{
-
-            x=parseInt(point.fx);
-            y=parseInt(point.fy)
-            // console.log(point.id[3])
-            if(point.id[3]==='1'){
-              
-              if(curp==3){
-                stair=[stairx+1400,stairy+1110]
-                cp1=[...cp1,stair]
-              }
-              cur=[x+1400,y+1110]
-              cp1=[...cp1,cur]
-              curp=0
-            }
-            else if(point.id[3]==='2'){
-              if(curp==3){
-                stair=[stairx+1100,stairy+1110]
-                cp1=[...cp1,stair]
-                
-              }
-              cur=[x+1400,y+1110]
-              cp2=[...cp2,cur]
-              curp=1
-            }
-            else if(point.id[3]==='3'){
-              
-              if(curp==3){
-                console.log(stair)
-                stair=[stairx+1400,stairy+1000]
-                cp3=[...cp3,stair]
-                
-              }
-              cur=[x+1400,y+1110]
-              cp3=[...cp3,cur]
-              curp=2
-            }
-            else if(point.id[3]==='S'){
-              stairx=x;
-              stairy=y;
-              
-              if(curp===0){
-                stair=[stairx+1110,stairy+1110]
-                cp1=[...cp1,stair]
-              }
-              else if(curp===1){
-                stair=[stairx+1110,stairy+1110]
-                cp2=[...cp2,stair]
-              }
-              else if(curp===2){
-                stair=[stairx+1000,stairy+1000]
-                cp3=[...cp3,stair]
-              }
-              curp=3;
-            }
-          })
-          // console.log("cp1")
-          // console.log(cp1);
-          // console.log("cp2")
-          // console.log(cp2);
-          // console.log("cp3")
-          // console.log(cp3);
-          setP1(cp1);
-          setP2(cp2);
-          setP3(cp3)
-         })
-        // Handle the response data
-        
-      } catch (error) {
-        // Handle the error
-        console.error("CSEerror");
-      }
-    };
-
-    fetchData();
+    var val=0;
+    if(loc[3]==='1'){
+      val=0;
+    }
+    else if(loc[3]==='2'){
+      val=1
+    }
+    else if(loc[3]==='3'){
+      val=2;
+    }
+    
     const img = new Image();
     img.src = currentImage;
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    const fetchData = async () => {
+      if(val!==floorImg){
+        setFloorImage(val);
+        sessionStorage.setItem("val",val)
+        setCurrentImage(floorData[val])
+    } 
+    const apiUrls = [
+      'http://127.0.0.1:5000/floors/cse1',
+      'http://127.0.0.1:5000/floors/cse2',
+      'http://127.0.0.1:5000/floors/cse0'
+    ];
+
+    const apiRequests = apiUrls.map(url => fetch(url).then(response => response.json()));
+
+    Promise.all(apiRequests)
+      .then(responses => {
+        var combinedResponse = [];
+        responses.forEach((response, index) => {
+          combinedResponse = [...combinedResponse,...response.rooms];
+        });
+
+        // Do something with the combined response object
+        // console.log('Combined Response:', combinedResponse);
+        setData(combinedResponse);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+      
+      setTimeout(() => {
+      if(data)
+      data.map((building) => {
+        const regex = /[^a-z0-9]+/gi;
+        
+        const b= building["ID"].replace(regex, "");
+        const c= loc.replace(regex, "");
+        // console.log(b,c)
+        if (
+          c.toLowerCase() ===
+          b.toLowerCase()
+        ) {
+          console.log("got it")
+          setCenterX(building.fx)
+          setCenterY(building.fy)
+          console.log(building.fx,building.fy)
+          return;
+        }
+        return 0;
+      })
+      // if (f === 1) {
+      //   console.log(x, y, loc);
+      // } 
+        }, 2000);
+      };   
+    fetchData();
+
     
     img.onload = () => {
       canvas.width = img.naturalWidth;
@@ -127,6 +109,20 @@ function Cse() {
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
       context.lineWidth = 20; 
       context.strokeStyle = "red";
+      
+      setTimeout(() => {
+        // Draw the circle
+      context.beginPath();
+      context.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+      context.fillStyle = "red";
+      context.fill();
+      context.closePath();
+
+      // Draw the text
+      context.font = '40px Arial';
+      context.fillStyle = "red";
+      context.fillText(loc, centerX, centerY+60);
+    }, 5000);
       
       if(floorPath && floorPath.length!=0){
         context.beginPath()
@@ -138,6 +134,7 @@ function Cse() {
         context.closePath()
       }     
     };
+      
   }, [currentImage]);
 
   const marks = [
@@ -155,6 +152,95 @@ function Cse() {
     },
   ];
 
+  const shortestPath=async()=>{
+    try {
+      await axios.post('http://127.0.0.1:5000/shortestpath', { 
+        src:"CS_201",
+        dest:"CS_302",
+        dept:"cse"
+       },{
+        headers: {
+          'Content-Type': 'application/json'
+        }}).then(res=>{
+        console.log(res.data.path);
+
+        var cp1=[],cp2=[],cp3=[],stair=[],cur;
+        var stairx,stairy,x,y;
+        var curp=-1;
+        res.data.path.map((point)=>{
+
+          x=parseInt(point.fx);
+          y=parseInt(point.fy)
+          // console.log(point.id[3])
+          if(point.id[3]==='1'){
+            
+            if(curp==3){
+              stair=[stairx+1400,stairy+1110]
+              cp1=[...cp1,stair]
+            }
+            cur=[x+1400,y+1110]
+            cp1=[...cp1,cur]
+            curp=0
+          }
+          else if(point.id[3]==='2'){
+            if(curp==3){
+              stair=[stairx+1100,stairy+1110]
+              cp1=[...cp1,stair]
+              
+            }
+            cur=[x+1400,y+1110]
+            cp2=[...cp2,cur]
+            curp=1
+          }
+          else if(point.id[3]==='3'){
+            
+            if(curp==3){
+              console.log(stair)
+              stair=[stairx+1400,stairy+1000]
+              cp3=[...cp3,stair]
+              
+            }
+            cur=[x+1400,y+1110]
+            cp3=[...cp3,cur]
+            curp=2
+          }
+          else if(point.id[3]==='S'){
+            stairx=x;
+            stairy=y;
+            
+            if(curp===0){
+              stair=[stairx+1110,stairy+1110]
+              cp1=[...cp1,stair]
+            }
+            else if(curp===1){
+              stair=[stairx+1110,stairy+1110]
+              cp2=[...cp2,stair]
+            }
+            else if(curp===2){
+              stair=[stairx+1000,stairy+1000]
+              cp3=[...cp3,stair]
+            }
+            curp=3;
+          }
+        })
+        // console.log("cp1")
+        // console.log(cp1);
+        // console.log("cp2")
+        // console.log(cp2);
+        // console.log("cp3")
+        // console.log(cp3);
+        setP1(cp1);
+        setP2(cp2);
+        setP3(cp3)
+       })
+      // Handle the response data
+      
+    } catch (error) {
+      // Handle the error
+      console.error("CSEerror");
+    }
+
+  }
   const handleImageChange = (e, val) => {
     if (val / 50 !== floorImg) {
       setFloorImage(val / 50);
@@ -218,7 +304,7 @@ function Cse() {
           <div className="cse-right">
             <Slider
               aria-label="Custom marks"
-              defaultValue={0}
+              defaultValue={parseInt(sessionStorage.getItem("val"))*50}
               step={50}
               orientation="vertical"
               valueLabelDisplay="off"

@@ -140,8 +140,9 @@ export default class CetMap extends Component {
             x = building["y"];
             y = building["x"];
             this.setState({
-              popup: building["name"]
+              popup: building.id
             });
+            sessionStorage.setItem("loc",building.id)
             f = 1;
             return;
           }
@@ -164,8 +165,9 @@ export default class CetMap extends Component {
           x = building["y"];
           y = building["x"];
           this.setState({
-            popup: building["ID"]
+            popup: building.ID
           });
+          sessionStorage.setItem("loc",building.ID)
           f = 1;
           return;
         }
@@ -210,8 +212,16 @@ export default class CetMap extends Component {
   };
 
   handleRedirect=()=>{
-    console.log("redirectt")
+    const result = window.confirm("Do you want to go to CSE page");
+    if(this.state.val)
+    
+  if (result) {
     window.location.href = '/CSE';
+  } else {
+    console.log('Cancelled.');
+  }
+    
+    
   }
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -278,14 +288,23 @@ export default class CetMap extends Component {
                   // }}
                   // onChange={this.recenter}
                 >
+                  {/* <div style=
+                      {{color: "black",
+                      fill: "black",
+                      fillOpacity: 0.4,
+                      opacity: 0.8,
+                      weight: 1}}> */}
                   <Polygon
                     positions={polygon} 
                     pathOptions={polygonStyle}
+                    
                     onClick={this.handleRedirect}
 
                   >
                     <Popup>{this.state.popup}</Popup>
                   </Polygon>
+                  {/* </div> */}
+                  
                 </Marker>
               </div>
             )}

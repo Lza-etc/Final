@@ -3,12 +3,17 @@ import {Navbar,Container,Nav,NavDropdown} from "react-bootstrap";
 import axios from "axios";
 import "../styles/Navbar.css";
 import CetMap from './CetMap';
+import { useNavigate } from "react-router-dom";
 
 const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStarLo,endLa,setEndLa,endLo,setEndLo}) => {
+  const navigate = useNavigate();
   const  [showDeptNav, setShowDeptNav] = useState(false)
   const [startloc, setStartLoc] = useState("");
   const [destiloc,setDestiLoc]=useState("");
   const [isCancelled, setIsCancelled] = useState(false);
+  const userId = sessionStorage.getItem("userId");
+
+  console.log(userId);
 
   const onChangeStart = (event) => {
     if (!isCancelled)
@@ -78,18 +83,48 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className='rightSide'>
-            <Nav.Link href="/dept" onClick={() => {
-              setNav(true)}}>Department</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
-            <div className='nav-sec'onClick={() => {setShowDeptNav(!showDeptNav)}}>Navigation</div>
-            <Nav.Link href="/Login">Login</Nav.Link>
-            <Nav.Link href="/Event">Events</Nav.Link>
+          <Nav className="rightSide">
+            <Nav.Link
+              href="/dept"
+              onClick={() => {
+                setNav(true);
+              }}
+            >
+              Department
+            </Nav.Link>
+            {/* <Nav.Link href="/Event">Events</Nav.Link> */}
+            <div
+              className="nav-sec"
+              onClick={() => {
+                setShowDeptNav(!showDeptNav);
+              }}
+            >
+              Navigation
+            </div>
+            {userId ? (
+              <div>
+                <Nav.Link href="/profile">Profile</Nav.Link>
+                <div
+                  className="nav-sec"
+                  onClick={() => {
+                    sessionStorage.removeItem("userId");
+                    navigate("/");
+                  }}
+                >
+                  Logout
+                </div>
+              </div>
+            ) : (
+              <div>
+                <Nav.Link href="/Event">Events</Nav.Link>
+                <Nav.Link href="/Login">Login</Nav.Link>
+              </div>
+            )}
             {/* <NavDropdown title="More" id="collasible-nav-dropdown">
-              <NavDropdown.Item classname='drop-down'  href="#action/3.1">Emergency Contact</NavDropdown.Item>
-              <NavDropdown.Item classname='drop-down' href="#action/3.2">Exam Hall Search</NavDropdown.Item>
-              <NavDropdown.Item classname='drop-down' href="#action/3.3">About Us</NavDropdown.Item>
-            </NavDropdown> */}
+                  <NavDropdown.Item classname='drop-down'  href="#action/3.1">Emergency Contact</NavDropdown.Item>
+                  <NavDropdown.Item classname='drop-down' href="#action/3.2">Exam Hall Search</NavDropdown.Item>
+                  <NavDropdown.Item classname='drop-down' href="#action/3.3">About Us</NavDropdown.Item>
+                </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
         <div className='dept-nav' hidden={!showDeptNav}>

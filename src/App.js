@@ -25,6 +25,8 @@ function App() {
   const [endLo,setEndLo]=useState(null);
   const [endLa,setEndLa]=useState(null);
   const [navi,setNavi]=useState(false);
+  const [loc,setLoc]=useState(null);
+  const [srch,setSrch]=useState(false);
  
   return (
     <div className="App">
@@ -33,13 +35,13 @@ function App() {
         <Navigationbar nav={nav} setNav={setNav} navi={navi} setNavi={setNavi} endLa={endLa} setEndLo={setEndLo} setEndLa={setEndLa} setStarLa={setStarLa
         } setStarLo={setStarLo} endLo={endLo} startLa={startLa} startLo={startLo}/>
        < Routes >
-          <Route path="/" element={<Home nav={nav} navi={navi} endLa={endLa} endLo={endLo} startLa={startLa} startLo={startLo}/>} />
+          <Route path="/" element={<Home nav={nav} navi={navi} endLa={endLa} endLo={endLo} startLa={startLa} startLo={startLo} srch={srch} loc={loc}/>} />
           <Route path="/MCA" element={<Mca/>} />
           <Route path="/CSE" element={<Cse/>} /> 
           {/* <Route path="/Navi" element={<Navigation />} /> */}
           <Route path="/CIVIL" element={<Civil/>} />
           <Route path="/login" element={<Login/>} />
-          <Route path="/event" element={<Event/>} />
+          <Route path="/event" element={<Event setLoc={setLoc} />} />
           <Route path="/dept" element={<DeptMap nav={nav} />} />
           <Route path="/EEE" element={<Eee/>} /> 
           <Route path="/profile" element={<Profile/>} />

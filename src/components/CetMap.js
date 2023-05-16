@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import L from "leaflet";
 import { useLocation } from 'react-router-dom';
-import { Map, TileLayer, Marker, Popup,Polygon } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup,Polygon ,Tooltip} from "react-leaflet";
 import { Nav, Button, Form } from "react-bootstrap";
 import location from "../assets/location.png";
 // import data from "../assets/cet_main.json";
@@ -56,9 +56,6 @@ export default class CetMap extends Component {
       sessionStorage.removeItem('srch')
         // this.map.setView(new L.LatLng(x, y), 19);
       } 
-      
-     
-    
       const apiUrls = [
         'http://127.0.0.1:5000/floors/cse1',
         'http://127.0.0.1:5000/floors/cse2',
@@ -95,7 +92,8 @@ export default class CetMap extends Component {
         startLa: this.props.startLa,
         startLo: this.props.startLo,
         endLa: this.props.endLa,
-        endLo: this.props.endLo       
+        endLo: this.props.endLo ,
+        srch:false,     
       
       });
 
@@ -149,8 +147,9 @@ export default class CetMap extends Component {
           return 0;
         });
       })
+      
       setTimeout(() => {
-        if(this.state.data)
+        if(this.state.data && f!==1)
       this.state.data.map((building) => {
         const regex = /[^a-z0-9]+/gi;
         
@@ -213,16 +212,14 @@ export default class CetMap extends Component {
 
   handleRedirect=()=>{
     const result = window.confirm("Do you want to go to CSE page");
-    if(this.state.val)
-    
-  if (result) {
-    window.location.href = '/CSE';
-  } else {
-    console.log('Cancelled.');
-  }
-    
-    
-  }
+    if (result) {
+      window.location.href = '/CSE';
+    } else {
+      console.log('Cancelled.');
+    }
+      
+      
+    }
   render() {
     const position = [this.state.lat, this.state.lng];
     // const { loc, srch } = useLocation().state || {};
@@ -301,7 +298,7 @@ export default class CetMap extends Component {
                     onClick={this.handleRedirect}
 
                   >
-                    <Popup>{this.state.popup}</Popup>
+                    <Tooltip permanent>{this.state.popup}</Tooltip>
                   </Polygon>
                   {/* </div> */}
                   
@@ -310,12 +307,67 @@ export default class CetMap extends Component {
             )}
             
             
-            {this.state.navi && (
+            {this.state.navi && (<div>
               <Routing
                 map={this.map}
                 startLoc={[this.state.startLa, this.state.startLo]}
                 endLoc={[this.state.endLa, this.state.endLo]}
               />
+              <Marker
+                  position={[this.state.endLa, this.state.endLo]}
+                  icon={myIcon}
+                  onAdd={(e) => {
+                    e.target.openPopup();
+                    this.recenter();
+                  }}
+                  // onMouseOut={(e) => {
+                  //   e.target.closePopup();
+                  // }}
+                  // onChange={this.recenter}
+                >
+                  {/* <div style=
+                      {{color: "black",
+                      fill: "black",
+                      fillOpacity: 0.4,
+                      opacity: 0.8,
+                      weight: 1}}> */}
+                  
+                    <Tooltip permanent>{this.state.popup}</Tooltip>
+                  {/* </div> */}
+                  
+                </Marker>
+              <Marker
+                  position={[this.state.endLa, this.state.endLo]}
+                  icon={myIcon}
+                  onAdd={(e) => {
+                    e.target.openPopup();
+                    this.recenter();
+                  }}
+                  // onMouseOut={(e) => {
+                  //   e.target.closePopup();
+                  // }}
+                  // onChange={this.recenter}
+                >
+                  {/* <div style=
+                      {{color: "black",
+                      fill: "black",
+                      fillOpacity: 0.4,
+                      opacity: 0.8,
+                      weight: 1}}> */}
+                  <Polygon
+                    positions={polygon} 
+                    pathOptions={polygonStyle}
+                    
+                    onClick={this.handleRedirect}
+
+                  >
+                    <Tooltip permanent>{this.state.popup}</Tooltip>
+                  </Polygon>
+                  {/* </div> */}
+                  
+                </Marker>
+            </div>
+              
             )}
 
           </Map>

@@ -4,6 +4,7 @@ import {Nav,Button,Form} from "react-bootstrap";
 import "../styles/Cse.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
+// import { pathSplit } from "./path_split";
 
 function Cse() {
   const canvasRef = useRef(null);
@@ -23,24 +24,31 @@ function Cse() {
   const [centerX,setCenterX] =useState(0);
   const [centerY,setCenterY] =useState(0);
   const loc = sessionStorage.getItem("loc");
+  const navi=sessionStorage.getItem("navi")
+  const src=sessionStorage.getItem("src")
+  const dest=sessionStorage.getItem("dest")
   const [data,setData]=useState([])
+  const [radius,setRadius]=useState(0)
  
 
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-
-    var val=0;
-    if(loc[3]==='1'){
-      val=0;
-    }
-    else if(loc[3]==='2'){
-      val=1
-    }
-    else if(loc[3]==='3'){
-      val=2;
-    }
+    if(loc){
+      var val=0;
+      setRadius(30)
+      if(loc[3]==='1'){
+        val=0;
+      }
+      else if(loc[3]==='2'){
+        val=1
+      }
+      else if(loc[3]==='3'){
+        val=2;
+      }
+}
+    
     
     const img = new Image();
     img.src = currentImage;
@@ -74,7 +82,7 @@ function Cse() {
       .catch(error => {
         console.error('Error:', error);
       });
-      
+
       setTimeout(() => {
       if(data)
       data.map((building) => {
@@ -100,6 +108,7 @@ function Cse() {
       // } 
         }, 2000);
       };   
+
     fetchData();
 
     
@@ -112,17 +121,23 @@ function Cse() {
       
       setTimeout(() => {
         // Draw the circle
-      context.beginPath();
-      context.arc(centerX, centerY, 30, 0, 2 * Math.PI);
-      context.fillStyle = "red";
-      context.fill();
-      context.closePath();
 
-      // Draw the text
-      context.font = '40px Arial';
-      context.fillStyle = "red";
-      context.fillText(loc, centerX, centerY+60);
+        if(loc){
+          context.beginPath();
+          context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+          context.fillStyle = "red";
+          context.fill();
+          context.closePath();
+
+          // Draw the text
+          context.font = '40px Arial';
+          context.fillStyle = "red";
+          context.fillText(loc, centerX, centerY+60);
+          sessionStorage.removeItem("loc");
+        }
+      
     }, 5000);
+   
       
       if(floorPath && floorPath.length!=0){
         context.beginPath()
@@ -136,6 +151,7 @@ function Cse() {
     };
       
   }, [currentImage]);
+
 
   const marks = [
     {
@@ -153,6 +169,15 @@ function Cse() {
   ];
 
   const shortestPath=async()=>{
+    // const data = {
+    //   'src': 'CS_101',
+    //   'dest': 'CS_302',
+    //   'dept': 'cse'
+    // };
+
+    // pathSplit(data).then(res=>{
+    //   console.log(res);
+    // })
     try {
       await axios.post('http://127.0.0.1:5000/shortestpath', { 
         src:"CS_201",
@@ -223,12 +248,12 @@ function Cse() {
             curp=3;
           }
         })
-        // console.log("cp1")
-        // console.log(cp1);
-        // console.log("cp2")
-        // console.log(cp2);
-        // console.log("cp3")
-        // console.log(cp3);
+        console.log("cp1")
+        console.log(cp1);
+        console.log("cp2")
+        console.log(cp2);
+        console.log("cp3")
+        console.log(cp3);
         setP1(cp1);
         setP2(cp2);
         setP3(cp3)

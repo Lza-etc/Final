@@ -16,6 +16,7 @@
     "bootstrap": "5.2.3",
     "cdbreact": "^1.5.3",
     "dotenv": "^16.0.1",
+    "firebase": "^9.22.0",
     "leaflet": "1.5.1",
     "leaflet-routing-machine": "3.2.12",
     "leaflet-search": "^3.0.2",

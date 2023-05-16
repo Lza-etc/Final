@@ -68,7 +68,7 @@ const About = () => {
                                 <LocalPhoneIcon/>+919145671209
                             </div>
                             <div className='about-contact-icon'>
-                                <BusinessIcon/> College Of Engineering, Trivandrum<br/>
+                                <BusinessIcon/> College of Engineering Trivandrum<br/>
                                         Sreekariyam<br/>
                                         PIN : 695017 
                             </div>

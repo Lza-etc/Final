@@ -2,25 +2,118 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {Nav,Button,Form} from "react-bootstrap";
 import "../styles/Cse.css";
+import axios from "axios";
 import { Slider } from "@mui/material";
 
 function Cse() {
   const canvasRef = useRef(null);
   
-  const p1=[[950,700],[2125,700],[2125,900]]
-   const p2=[[950,700],[2125,700]]
-    const p3=[[2125,700],[2125,900]]
+  // const p1=[[950,700],[2125,700],[2125,900]]
+  //  const p2=[[950,700],[2125,700]]
+  //   const p3=[[2125,700],[2125,900]]
   const floorData = ["images/CSE0.png", "images/CSE1.png", "images/CSE2.png"];
   const [currentImage, setCurrentImage] = useState("images/CSE0.png");
   const [floorImg, setFloorImage] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
   const [locationImg,setLocationImg]=useState(0);
-
+  const [p1,setP1]=useState([]);
+  const [p2,setP2]=useState([]);
+  const [p3,setP3]=useState([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
+    const fetchData = async () => {
+      try {
+        await axios.post('http://127.0.0.1:5000/shortestpath', { 
+          src:"CS_201",
+          dest:"CS_302",
+          dept:"cse"
+         },{
+          headers: {
+            'Content-Type': 'application/json'
+          }}).then(res=>{
+          console.log(res.data.path);
+
+          var cp1=[],cp2=[],cp3=[],stair=[],cur;
+          var stairx,stairy,x,y;
+          var curp=-1;
+          res.data.path.map((point)=>{
+
+            x=parseInt(point.fx);
+            y=parseInt(point.fy)
+            console.log(point.id[3])
+            if(point.id[3]==='1'){
+              
+              if(curp==3){
+                stair=[stairx+1400,stairy+1110]
+                cp1=[...cp1,stair]
+              }
+              cur=[x+1400,y+1110]
+              cp1=[...cp1,cur]
+              curp=0
+            }
+            else if(point.id[3]==='2'){
+              if(curp==3){
+                stair=[stairx+1100,stairy+1110]
+                cp1=[...cp1,stair]
+                
+              }
+              cur=[x+1400,y+1110]
+              cp2=[...cp2,cur]
+              curp=1
+            }
+            else if(point.id[3]==='3'){
+              
+              if(curp==3){
+                console.log(stair)
+                stair=[stairx+1400,stairy+1000]
+                cp3=[...cp3,stair]
+                
+              }
+              cur=[x+1400,y+1110]
+              cp3=[...cp3,cur]
+              curp=2
+            }
+            else if(point.id[3]==='S'){
+              stairx=x;
+              stairy=y;
+              
+              if(curp===0){
+                stair=[stairx+1110,stairy+1110]
+                cp1=[...cp1,stair]
+              }
+              else if(curp===1){
+                stair=[stairx+1110,stairy+1110]
+                cp2=[...cp2,stair]
+              }
+              else if(curp===2){
+                stair=[stairx+1000,stairy+1000]
+                cp3=[...cp3,stair]
+              }
+              curp=3;
+            }
+          })
+          console.log("cp1")
+          console.log(cp1);
+          console.log("cp2")
+          console.log(cp2);
+          console.log("cp3")
+          console.log(cp3);
+          setP1(cp1);
+          setP2(cp2);
+          setP3(cp3)
+         })
+        // Handle the response data
+        
+      } catch (error) {
+        // Handle the error
+        console.error("CSEerror");
+      }
+    };
+
+    fetchData();
     const img = new Image();
     img.src = currentImage;
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -32,7 +125,7 @@ function Cse() {
       context.lineWidth = 20; 
       context.strokeStyle = "red";
       
-      if(floorPath.length!=0){
+      if(floorPath && floorPath.length!=0){
         context.beginPath()
         context.moveTo(floorPath[0][0],floorPath[0][1])
         for(var i=1;i<floorPath.length;i++){

@@ -11,14 +11,17 @@ function Cse() {
   // const p1=[[950,700],[2125,700],[2125,900]]
   //  const p2=[[950,700],[2125,700]]
   //   const p3=[[2125,700],[2125,900]]
+  const [p1,setP1]=useState([]);
+  const [p2,setP2]=useState([]);
+  const [p3,setP3]=useState([]);
   const floorData = ["images/CSE0.png", "images/CSE1.png", "images/CSE2.png"];
   const [currentImage, setCurrentImage] = useState("images/CSE0.png");
   const [floorImg, setFloorImage] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
   const [locationImg,setLocationImg]=useState(0);
-  const [p1,setP1]=useState([]);
-  const [p2,setP2]=useState([]);
-  const [p3,setP3]=useState([]);
+  const loc = sessionStorage.getItem("loc");
+  console.log(loc)
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -43,7 +46,7 @@ function Cse() {
 
             x=parseInt(point.fx);
             y=parseInt(point.fy)
-            console.log(point.id[3])
+            // console.log(point.id[3])
             if(point.id[3]==='1'){
               
               if(curp==3){
@@ -95,12 +98,12 @@ function Cse() {
               curp=3;
             }
           })
-          console.log("cp1")
-          console.log(cp1);
-          console.log("cp2")
-          console.log(cp2);
-          console.log("cp3")
-          console.log(cp3);
+          // console.log("cp1")
+          // console.log(cp1);
+          // console.log("cp2")
+          // console.log(cp2);
+          // console.log("cp3")
+          // console.log(cp3);
           setP1(cp1);
           setP2(cp2);
           setP3(cp3)

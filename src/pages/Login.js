@@ -39,9 +39,12 @@ function Login() {
             sessionStorage.setItem("userId", res.data.id);
           }
           console.log(res.data.message);
-          if (res.data.message[0] == "L") setLogin(1);
+          if (res.data.message[0] == "L") {
+            setLogin(1);
+            navigate('/profile')
+          }
           else setLogin(2);
-          navigate("/profile")
+          
         });
     } catch (err) {
       console.log(err);

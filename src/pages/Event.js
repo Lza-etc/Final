@@ -38,6 +38,7 @@ const Event = () => {
           {items.map((item) => {
             return(
                 <div
+                key={item.title}
             style={{
               backgroundColor: "#7209B7",
               width: "215px",

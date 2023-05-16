@@ -13,7 +13,7 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
   const [isCancelled, setIsCancelled] = useState(false);
   const userId = sessionStorage.getItem("userId");
 
-  console.log(userId);
+  // console.log(userId);
 
   const onChangeStart = (event) => {
     if (!isCancelled)
@@ -102,8 +102,11 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
               Navigation
             </div>
             {userId ? (
-              <div>
                 <Nav.Link href="/profile">Profile</Nav.Link>
+            ):(
+              <Nav.Link href="/Event">Events</Nav.Link>
+            )}
+            {userId ? (
                 <div
                   className="nav-sec"
                   onClick={() => {
@@ -113,10 +116,9 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
                 >
                   Logout
                 </div>
-              </div>
             ) : (
               <div>
-                <Nav.Link href="/Event">Events</Nav.Link>
+                
                 <Nav.Link href="/Login">Login</Nav.Link>
               </div>
             )}

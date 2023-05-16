@@ -14,6 +14,7 @@ import axios from 'axios';
 
 
 export default class CetMap extends Component {
+  prevSessionStorageValue = sessionStorage.getItem('loc');
   constructor(props) {
     super(props);
     this.state = { 
@@ -30,9 +31,47 @@ export default class CetMap extends Component {
       startLo: this.props.startLo,
       endLa: this.props.endLa,
       endLo: this.props.endLo,
+      data:null,
       popup: "",
     };
+
   }
+  componentDidMount() {
+    // const sessionStorageValue = sessionStorage.getItem('srch');
+    // if (sessionStorageValue === true) {
+    //   this.setState({ val: 'loc' ,srch:false});
+    //   console.log("hello")
+    //   console.log(sessionStorage.getItem('loc'))
+    // }
+    // componentDidMount() {
+      const apiUrls = [
+        'http://127.0.0.1:5000/floors/cse1',
+        'http://127.0.0.1:5000/floors/cse2',
+        'http://127.0.0.1:5000/floors/cse0'
+      ];
+  
+      const apiRequests = apiUrls.map(url => fetch(url).then(response => response.json()));
+  
+      Promise.all(apiRequests)
+        .then(responses => {
+          var combinedResponse = [];
+          responses.forEach((response, index) => {
+            combinedResponse = [...combinedResponse,...response.rooms];
+          });
+  
+          // Do something with the combined response object
+          console.log('Combined Response:', combinedResponse);
+          this.setState({
+            data:combinedResponse
+          })
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+        
+    }
+
+
   componentDidUpdate(prevProps) {
     if (prevProps.navi !== this.props.navi) 
       // Props have changed, update the state
@@ -44,30 +83,9 @@ export default class CetMap extends Component {
         endLo: this.props.endLo       
       
       });
-    
-    
-    if  ((this.props.loc && this.props.loc !== this.state.loc)||(this.props.loc !==this.state.val)) {
-      console.log("hii")
-      this.setState({
-        val: this.props.loc,
-      });
-      console.log(this.state.val,this.props.loc);
-      const event = new Event('click', { bubbles: true, cancelable: true });
-      if(this.props.loc ===this.state.val && this.state.loc){
-        this.setState({
-          loc:0
-        });
-        this.handleSearch(event);
-      }
-      
-    }
-    
-    // console.log(this.state);
-  }
-  async componentDidMount() {
 
-  }
-  
+}
+
   
   saveMap = (map) => {
     // console.log(map);
@@ -79,6 +97,9 @@ export default class CetMap extends Component {
   
   handleSearch = async(event) => {
     event.preventDefault(); // Prevent default submission
+    this.setState({
+      srch: false
+    });
     console.log("search "+this.state.val);
     if (this.state.marker) {
       this.setState({
@@ -86,35 +107,19 @@ export default class CetMap extends Component {
       });
     } else {
       var f = 0,x,y;
-      await axios.get("http://127.0.0.1:5000/floors/cse1").then(res=>{
-        res.data.rooms.map((building) => {
-          const regex = /[^a-z0-9]+/gi;
-          const b= building["ID"].replace(regex, "");
-          if (
-            this.state.val.toLowerCase() ===
-            b.toLowerCase()
-          ) {
-            console.log("got it")
-            x = building["y"];
-            y = building["x"];
-            this.setState({
-              popup: building["ID"]
-            });
-            f = 1;
-          }
-          return 0;
-        });
-      })
+        
+    
       await axios.get("http://127.0.0.1:5000/depts").then(res=>{
         // console.log(res.data)
         res.data.depts.map((building) => {
+          // console.log(building.id)
           const regex = /[^a-z0-9]+/gi;
           const b= building["id"].replace(regex, "");
           if (
             this.state.val.toLowerCase() ===
             b.toLowerCase()
           ) {
-            console.log("got it")
+            
             x = building["y"];
             y = building["x"];
             this.setState({
@@ -124,6 +129,24 @@ export default class CetMap extends Component {
           }
           return 0;
         });
+      })
+      this.state.data.map((building) => {
+        const regex = /[^a-z0-9]+/gi;
+        // console.log(building.ID)
+        const b= building["ID"].replace(regex, "");
+        if (
+          this.state.val.toLowerCase() ===
+          b.toLowerCase()
+        ) {
+          console.log("got it")
+          x = building["y"];
+          y = building["x"];
+          this.setState({
+            popup: building["ID"]
+          });
+          f = 1;
+        }
+        return 0;
       })
       
       if (f === 1) {
@@ -161,6 +184,23 @@ export default class CetMap extends Component {
     // const { loc, srch } = useLocation().state || {};
     // console.log(this.props.location.state); // 'value1'
     // console.log(loc);
+    const sessionStorageValue = sessionStorage.getItem("srch");
+    const val = sessionStorage.getItem("loc");
+    // console.log(sessionStorageValue)
+    if (sessionStorageValue && val) {
+     this.setState({
+      srch:false,
+      val:val
+     })
+    
+     const event = new Event('click');
+     if(this.state.val && this.state.data){
+      this.handleSearch(event)
+     sessionStorage.removeItem("srch");
+     }
+     
+    }
+    
     const polygon = [[8.54596, 76.90359 ], [8.54601, 76.90407],  [8.54552, 76.90412],[8.54547, 76.90364]];
     const polygonStyle = {
       fillColor: '#00FF00',

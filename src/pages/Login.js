@@ -35,13 +35,13 @@ function Login() {
             'Content-Type': 'application/json'
           }
         }).then(res =>{
-          console.log(res.data.message)
-            if(res.data.message[0]=='L')
-            {setLogin(1);
-              navigate('/profile');}
-            else
-            setLogin(2);
-            
+          if (res.data.id) {
+            sessionStorage.setItem("userId", res.data.id);
+          }
+          console.log(res.data.message);
+          if (res.data.message[0] == "L") setLogin(1);
+          else setLogin(2);
+          navigate("/profile")
         });
     } catch (err) {
       console.log(err);

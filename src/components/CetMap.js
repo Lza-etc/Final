@@ -47,6 +47,7 @@ export default class CetMap extends Component {
 
     const sessionStorageValue = sessionStorage.getItem("srch");
     const val = sessionStorage.getItem("loc");
+
     if (sessionStorageValue && val) {
 
       var f=this.searchLoc(val)
@@ -55,7 +56,12 @@ export default class CetMap extends Component {
       }
       sessionStorage.removeItem('srch')
         // this.map.setView(new L.LatLng(x, y), 19);
-      } 
+      }
+      else{
+          sessionStorage.removeItem("loc")
+          
+          
+      }
       const apiUrls = [
         'http://127.0.0.1:5000/floors/cse1',
         'http://127.0.0.1:5000/floors/cse2',
@@ -137,10 +143,11 @@ export default class CetMap extends Component {
             
             x = building["y"];
             y = building["x"];
+            sessionStorage.setItem("loc",building.id)
             this.setState({
               popup: building.id
             });
-            sessionStorage.setItem("loc",building.id)
+            
             f = 1;
             return;
           }
@@ -163,10 +170,11 @@ export default class CetMap extends Component {
           console.log("got it")
           x = building["y"];
           y = building["x"];
+          sessionStorage.setItem("loc",building.ID)
           this.setState({
             popup: building.ID
           });
-          sessionStorage.setItem("loc",building.ID)
+         
           f = 1;
           return;
         }
@@ -180,20 +188,20 @@ export default class CetMap extends Component {
           endLa: x,
           endLo: y
         });
+        return;
         // this.map.setView(new L.LatLng(x, y), 19);
       } 
-      }, 2000);
-      
-      return f;
+      else if(f===0) {
+        alert("no such building");
+      }
+      }, 1000);
+     return await f;
       
     }};   
 
   handleSearch = async(event) => {
     event.preventDefault(); // Prevent default submission
-    var f=this.searchLoc(this.state.val);
-    if(f===0) {
-      alert("no such building");
-    }
+    this.searchLoc(this.state.val)
     
   };
   recenter = () => {
@@ -271,7 +279,7 @@ export default class CetMap extends Component {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            {this.state.srch && (
+            {this.state.srch &&  (
               <div>
                 <Marker
                   position={[this.state.endLa, this.state.endLo]}
@@ -298,7 +306,9 @@ export default class CetMap extends Component {
                     onClick={this.handleRedirect}
 
                   >
-                    <Tooltip permanent>{this.state.popup}</Tooltip>
+                    <Tooltip permanent>
+                      
+                      {this.state.popup}</Tooltip>
                   </Polygon>
                   {/* </div> */}
                   
@@ -319,41 +329,8 @@ export default class CetMap extends Component {
                   onAdd={(e) => {
                     e.target.openPopup();
                     this.recenter();
-                  }}
-                  // onMouseOut={(e) => {
-                  //   e.target.closePopup();
-                  // }}
-                  // onChange={this.recenter}
-                >
-                  {/* <div style=
-                      {{color: "black",
-                      fill: "black",
-                      fillOpacity: 0.4,
-                      opacity: 0.8,
-                      weight: 1}}> */}
-                  
-                    <Tooltip permanent>{this.state.popup}</Tooltip>
-                  {/* </div> */}
-                  
-                </Marker>
-              <Marker
-                  position={[this.state.endLa, this.state.endLo]}
-                  icon={myIcon}
-                  onAdd={(e) => {
-                    e.target.openPopup();
-                    this.recenter();
-                  }}
-                  // onMouseOut={(e) => {
-                  //   e.target.closePopup();
-                  // }}
-                  // onChange={this.recenter}
-                >
-                  {/* <div style=
-                      {{color: "black",
-                      fill: "black",
-                      fillOpacity: 0.4,
-                      opacity: 0.8,
-                      weight: 1}}> */}
+                  }}>
+
                   <Polygon
                     positions={polygon} 
                     pathOptions={polygonStyle}
@@ -363,7 +340,7 @@ export default class CetMap extends Component {
                   >
                     <Tooltip permanent>{this.state.popup}</Tooltip>
                   </Polygon>
-                  {/* </div> */}
+
                   
                 </Marker>
             </div>

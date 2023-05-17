@@ -23,21 +23,15 @@ function Cse() {
   const [locationImg,setLocationImg]=useState(0);
   const [centerX,setCenterX] =useState(0);
   const [centerY,setCenterY] =useState(0);
-  const loc = sessionStorage.getItem("loc");
-  const navi=sessionStorage.getItem("navi")
+  // const [loc,setLoc] =useState(0);
+  const loc=sessionStorage.getItem("loc")
   const src=sessionStorage.getItem("src")
   const dest=sessionStorage.getItem("dest")
   const [data,setData]=useState([])
   const [radius,setRadius]=useState(0)
- 
-
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+  const [over,setOver]=useState(0);
+  var val=0;
     if(loc){
-      var val=0;
-      setRadius(30)
       if(loc[3]==='1'){
         val=0;
       }
@@ -47,8 +41,23 @@ function Cse() {
       else if(loc[3]==='3'){
         val=2;
       }
+      console.log(loc,val)
+      sessionStorage.setItem("slider",val)
 }
+else{
+  sessionStorage.setItem("slider",0)
+}
+ 
+
+
+  useEffect(() => {
+    // setLoc(sessionStorage.getItem("loc"));
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
     
+    if(loc)
+    setRadius(30)
     
     const img = new Image();
     img.src = currentImage;
@@ -84,7 +93,7 @@ function Cse() {
       });
 
       setTimeout(() => {
-      if(data)
+      if(data && loc)
       data.map((building) => {
         const regex = /[^a-z0-9]+/gi;
         
@@ -128,12 +137,13 @@ function Cse() {
           context.fillStyle = "red";
           context.fill();
           context.closePath();
-
+          
           // Draw the text
           context.font = '40px Arial';
           context.fillStyle = "red";
           context.fillText(loc, centerX, centerY+60);
-          sessionStorage.removeItem("loc");
+          // sessionStorage.removeItem("loc");
+          
         }
       
     }, 5000);
@@ -149,7 +159,15 @@ function Cse() {
         context.closePath()
       }     
     };
-      
+  sessionStorage.removeItem("loc")  
+
+
+  if(src && dest && !over){
+    shortestPath(src,dest).then(res=>{
+      console.log("shortest path complete")
+      setOver(1)
+    })
+  }
   }, [currentImage]);
 
 
@@ -168,20 +186,12 @@ function Cse() {
     },
   ];
 
-  const shortestPath=async()=>{
-    // const data = {
-    //   'src': 'CS_101',
-    //   'dest': 'CS_302',
-    //   'dept': 'cse'
-    // };
-
-    // pathSplit(data).then(res=>{
-    //   console.log(res);
-    // })
+  const shortestPath=async(src,dest)=>{
+    
     try {
       await axios.post('http://127.0.0.1:5000/shortestpath', { 
-        src:"CS_201",
-        dest:"CS_302",
+        src:src,
+        dest:dest,
         dept:"cse"
        },{
         headers: {
@@ -315,6 +325,9 @@ function Cse() {
           <Link to="/MCA" className="left-nav-links">
             MCA
           </Link>
+            <Link to="/MAIN" className='left-nav-links'>
+            MECH
+            </Link>
           <Link to="/CIVIL" className="left-nav-links ">
             CIVIL
           </Link>
@@ -329,7 +342,7 @@ function Cse() {
           <div className="cse-right">
             <Slider
               aria-label="Custom marks"
-              defaultValue={parseInt(sessionStorage.getItem("val"))*50}
+              defaultValue={parseInt(sessionStorage.getItem("slider"))*50}
               step={50}
               orientation="vertical"
               valueLabelDisplay="off"

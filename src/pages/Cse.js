@@ -4,8 +4,10 @@ import {Nav,Button,Form} from "react-bootstrap";
 import "../styles/Cse.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
+import splitPath from "./path_split.js";
 // import { pathSplit } from "./path_split";
 
+var spath=1;
 function Cse() {
   const canvasRef = useRef(null);
   // const sliderRef = useRef(null);
@@ -13,9 +15,14 @@ function Cse() {
   // const p1=[[950,700],[2125,700],[2125,900]]
   //  const p2=[[950,700],[2125,700]]
   //   const p3=[[2125,700],[2125,900]]
-  const [p1,setP1]=useState([]);
-  const [p2,setP2]=useState([]);
-  const [p3,setP3]=useState([]);
+  // var p1=[];
+  // var p2=[];
+  // var p3=[];
+
+ 
+  const [p1,setP1]=useState([])
+  const [p2,setP2]=useState([])
+  const [p3,setP3]=useState([])
   const floorData = ["images/CSE0.png", "images/CSE1.png", "images/CSE2.png"];
   const [currentImage, setCurrentImage] = useState("images/CSE0.png");
   const [floorImg, setFloorImage] = useState(0);
@@ -41,23 +48,23 @@ function Cse() {
     // setLoc(sessionStorage.getItem("loc"));
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    if(loc){
-      if(loc[3]==='1'){
-        val=0;
-      }
-      else if(loc[3]==='2'){
-        val=1
-      }
-      else if(loc[3]==='3'){
-        val=2;
-      }
-      console.log(loc,val)
-      sessionStorage.setItem("dest",loc);
-      sessionStorage.setItem("slider",val)
-    }
-    else{
-      sessionStorage.setItem("slider",0)
-    }
+    // if(loc){
+    //   if(loc[3]==='1'){
+    //     val=0;
+    //   }
+    //   else if(loc[3]==='2'){
+    //     val=1
+    //   }
+    //   else if(loc[3]==='3'){
+    //     val=2;
+    //   }
+    //   console.log(loc,val)
+    //   sessionStorage.setItem("dest",loc);
+    //   sessionStorage.setItem("slider",val)
+    // }
+    // else{
+    //   sessionStorage.setItem("slider",0)
+    // }
     
     if(loc)
     setRadius(30)
@@ -67,11 +74,12 @@ function Cse() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     const fetchData = async () => {
-      if(sessionStorage.getItem("slider") !==floorImg){
-        setFloorImage(val);
-        sessionStorage.setItem("val",val)
-        setCurrentImage(floorData[val])
-    } 
+      // const s=sessionStorage.getItem("slider")
+    //   if(s !==floorImg){
+    //     setFloorImage(s);
+    //     // sessionStorage.setItem("val",s)
+    //     setCurrentImage(floorData[s])
+    // } 
     const apiUrls = [
       'http://127.0.0.1:5000/floors/cse1',
       'http://127.0.0.1:5000/floors/cse2',
@@ -113,7 +121,6 @@ function Cse() {
           y=building.fy;
           // sessionStorage.setItem("cx",building.fx)
           // sessionStorage.setItem("cy",building.fy)
-          console.log("insed calling")
           console.log(building.fx,building.fy)
           return;
         }
@@ -171,12 +178,7 @@ function Cse() {
   // sessionStorage.removeItem("loc")  
 
 
-  // if(src && dest && !over){
-  //   shortestPath(src,dest).then(res=>{
-  //     console.log("shortest path complete")
-  //     setOver(1)
-  //   })
-  // }
+
   }, [currentImage]);
 
 
@@ -209,84 +211,34 @@ function Cse() {
         headers: {
           'Content-Type': 'application/json'
         }}).then(res=>{
-        console.log(res.data.path);
-
-        var cp1=[],cp2=[],cp3=[],stair=[],cur;
-        var stairx,stairy,x,y;
-        var curp=-1;
-        res.data.path.map((point)=>{
-
-          x=parseInt(point.fx);
-          y=parseInt(point.fy)
-          // console.log(point.id[3])
-          if(point.id[3]==='1'){
-            
-            if(curp==3){
-              stair=[stairx+1400,stairy+1110]
-              cp1=[...cp1,stair]
-            }
-            cur=[x+1400,y+1110]
-            cp1=[...cp1,cur]
-            curp=0
-          }
-          else if(point.id[3]==='2'){
-            if(curp==3){
-              stair=[stairx+1100,stairy+1110]
-              cp1=[...cp1,stair]
-              
-            }
-            cur=[x+1400,y+1110]
-            cp2=[...cp2,cur]
-            curp=1
-          }
-          else if(point.id[3]==='3'){
-            
-            if(curp==3){
-              console.log(stair)
-              stair=[stairx+1400,stairy+1000]
-              cp3=[...cp3,stair]
-              
-            }
-            cur=[x+1400,y+1110]
-            cp3=[...cp3,cur]
-            curp=2
-          }
-          else if(point.id[3]==='S'){
-            stairx=x;
-            stairy=y;
-            
-            if(curp===0){
-              stair=[stairx+1110,stairy+1110]
-              cp1=[...cp1,stair]
-            }
-            else if(curp===1){
-              stair=[stairx+1110,stairy+1110]
-              cp2=[...cp2,stair]
-            }
-            else if(curp===2){
-              stair=[stairx+1000,stairy+1000]
-              cp3=[...cp3,stair]
-            }
-            curp=3;
-          }
-        })
-        console.log("cp1")
-        console.log(cp1);
-        console.log("cp2")
-        console.log(cp2);
-        console.log("cp3")
-        console.log(cp3);
-        setP1(cp1);
-        setP2(cp2);
-        setP3(cp3)
+        // console.log(res.data.path);
+        var p = splitPath(res.data.path, 3)
+        
+        // console.log(p.path)
+        
+        if(p.path[0])
+          setP1(Array.from(p.path[0], x => [3.6*x[0], 3.6*x[1]]))
+        if(p.path[1])
+          setP2(Array.from(p.path[1], x => [3.6*x[0], 3.6*x[1]]))
+        if(p.path[2])
+          setP3(Array.from(p.path[2], x => [3.6*x[0], 3.6*x[1]]))
+        // console.log(p1,p2,p3)
+        console.log(p.ids)
        })
       // Handle the response data
       
     } catch (error) {
       // Handle the error
-      console.error("CSEerror");
+      console.error("CSEerror",error);
     }
 
+  }
+  if(src && dest && spath){
+    spath=0;
+    shortestPath(src,dest).then(res=>{
+      console.log("shortest path complete")
+      
+    })
   }
   const handleImageChange = (e, val) => {
     console.log(val)
@@ -295,7 +247,7 @@ function Cse() {
       setCurrentImage(floorData[val / 50]);
       
       if(val===0)
-      setFloorPath(p1);
+        setFloorPath(p1);
       else if(val===50)
         setFloorPath(p2);
       else if(val===100)
@@ -355,7 +307,7 @@ function Cse() {
           <div className="cse-right">
             <Slider
               aria-label="Custom marks"
-              defaultValue={parseInt(sessionStorage.getItem("slider"))*50}
+              defaultValue={0}
               step={50}
               orientation="vertical"
               valueLabelDisplay="off"

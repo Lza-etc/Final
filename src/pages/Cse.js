@@ -30,7 +30,17 @@ function Cse() {
   const [data,setData]=useState([])
   const [radius,setRadius]=useState(0)
   const [over,setOver]=useState(0);
+  var x=0,y=0;
   var val=0;
+
+
+ 
+
+
+  useEffect(() => {
+    // setLoc(sessionStorage.getItem("loc"));
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
     if(loc){
       if(loc[3]==='1'){
         val=0;
@@ -42,19 +52,12 @@ function Cse() {
         val=2;
       }
       console.log(loc,val)
+      sessionStorage.setItem("dest",loc);
       sessionStorage.setItem("slider",val)
-}
-else{
-  sessionStorage.setItem("slider",0)
-}
- 
-
-
-  useEffect(() => {
-    // setLoc(sessionStorage.getItem("loc"));
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-
+    }
+    else{
+      sessionStorage.setItem("slider",0)
+    }
     
     if(loc)
     setRadius(30)
@@ -64,7 +67,7 @@ else{
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     const fetchData = async () => {
-      if(val!==floorImg){
+      if(sessionStorage.getItem("slider") !==floorImg){
         setFloorImage(val);
         sessionStorage.setItem("val",val)
         setCurrentImage(floorData[val])
@@ -93,7 +96,8 @@ else{
       });
 
       setTimeout(() => {
-      if(data && loc)
+      console.log("loc"+loc)
+      if(data && loc )
       data.map((building) => {
         const regex = /[^a-z0-9]+/gi;
         
@@ -105,8 +109,11 @@ else{
           b.toLowerCase()
         ) {
           console.log("got it")
-          setCenterX(building.fx)
-          setCenterY(building.fy)
+          x=building.fx;
+          y=building.fy;
+          // sessionStorage.setItem("cx",building.fx)
+          // sessionStorage.setItem("cy",building.fy)
+          console.log("insed calling")
           console.log(building.fx,building.fy)
           return;
         }
@@ -133,15 +140,17 @@ else{
 
         if(loc){
           context.beginPath();
-          context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-          context.fillStyle = "red";
+          
+          console.log(x,y)
+          context.arc(x*3.6, y*3.6, 20, 0, 2 * Math.PI);
+          context.fillStyle = "blue";
           context.fill();
           context.closePath();
           
           // Draw the text
           context.font = '40px Arial';
           context.fillStyle = "red";
-          context.fillText(loc, centerX, centerY+60);
+          context.fillText(loc, x, y+60);
           // sessionStorage.removeItem("loc");
           
         }
@@ -159,15 +168,15 @@ else{
         context.closePath()
       }     
     };
-  sessionStorage.removeItem("loc")  
+  // sessionStorage.removeItem("loc")  
 
 
-  if(src && dest && !over){
-    shortestPath(src,dest).then(res=>{
-      console.log("shortest path complete")
-      setOver(1)
-    })
-  }
+  // if(src && dest && !over){
+  //   shortestPath(src,dest).then(res=>{
+  //     console.log("shortest path complete")
+  //     setOver(1)
+  //   })
+  // }
   }, [currentImage]);
 
 
@@ -187,6 +196,9 @@ else{
   ];
 
   const shortestPath=async(src,dest)=>{
+    if(src[0]!=='C'&&src[1]!=='S'){
+      src="CS_start"
+    }
     
     try {
       await axios.post('http://127.0.0.1:5000/shortestpath', { 
@@ -277,6 +289,7 @@ else{
 
   }
   const handleImageChange = (e, val) => {
+    console.log(val)
     if (val / 50 !== floorImg) {
       setFloorImage(val / 50);
       setCurrentImage(floorData[val / 50]);

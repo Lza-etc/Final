@@ -22,6 +22,9 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
     if(loc){
       setDestiLoc(loc)
     }
+    if(destiloc){
+      setDestiLoc(loc)
+    }
      
     const fetchData = async () => {
       
@@ -43,6 +46,7 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
         // Do something with the combined response object
         // console.log('Combined Response:', combinedResponse);
         setData(combinedResponse);
+        console.log(combinedResponse)
       })
       .catch(error => {
         console.error('Error:', error);
@@ -119,6 +123,7 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
           const regex = /[^a-z0-9]+/gi;
             const b= building.ID.replace(regex, "");
             const c= startloc.replace(regex, "");
+            // console.log(b,c)
             if (
               c.toLowerCase() ===
               b.toLowerCase()
@@ -136,8 +141,10 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
       data.map((building) => {
 
         const regex = /[^a-z0-9]+/gi;
+        
           const b= building.ID.replace(regex, "");
           const c= destiloc.replace(regex, "");
+          // console.log(b,c)
           if (
             c.toLowerCase() ===
             b.toLowerCase()

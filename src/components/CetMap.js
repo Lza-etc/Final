@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import L from "leaflet";
 import { useLocation } from 'react-router-dom';
-import { Map, TileLayer, Marker, Popup,Polygon ,Tooltip} from "react-leaflet";
+import { Map, TileLayer, Marker, Popup,Polygon ,Tooltip,GeoJSON} from "react-leaflet";
 import { Nav, Button, Form } from "react-bootstrap";
 import location from "../assets/location.png";
 // import data from "../assets/cet_main.json";
@@ -25,12 +25,12 @@ export default class CetMap extends Component {
       marker: null,
       map: null,
       srch: false,
-      loc:1,
       navi: this.props.navi,
       startLa: this.props.startLa,
       startLo: this.props.startLo,
       endLa: this.props.endLa,
       endLo: this.props.endLo,
+      buildingGeoJSON:null,
       data:null,
       popup: "",
     };
@@ -49,7 +49,10 @@ export default class CetMap extends Component {
     const val = sessionStorage.getItem("loc");
 
     if (sessionStorageValue && val) {
-
+      sessionStorage.setItem("dest",val)
+      this.setState({
+        val:val
+      })
       var f=this.searchLoc(val)
       if(f && f===0){
         console.log("no such building");
@@ -86,6 +89,35 @@ export default class CetMap extends Component {
         .catch(error => {
           console.error('Error:', error);
         });
+
+      //   setTimeout(() => {
+      //   const fetchBuildingCoordinates = async () => {
+      //     try {
+      //       const response = await fetch(
+      //         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent("CE1")}&format=json`
+      //       );
+      //       const data = await response.json();
+    
+      //       if (data && data.length > 0) {
+      //         const { lat, lon } = data[0];
+      //         var GeoJSON={
+      //           type: 'Point',
+      //           coordinates: [parseFloat(lat), parseFloat(lon)],
+      //         }
+      //         this.setState({
+      //           buildingGeoJSON:GeoJSON
+      //         });
+      //           console.log(GeoJSON)
+            
+      //       }
+      //     } catch (error) {
+      //       console.error('Error fetching building coordinates:', error);
+      //     }
+      //   };
+      //   fetchBuildingCoordinates();
+      // }, 1000);
+    
+        
         
     }
 
@@ -156,46 +188,48 @@ export default class CetMap extends Component {
       })
       
       setTimeout(() => {
-        if(this.state.data && f!==1)
-      this.state.data.map((building) => {
-        const regex = /[^a-z0-9]+/gi;
-        
-        const b= building["ID"].replace(regex, "");
-        const c= val.replace(regex, "");
-        // console.log(b,c)
-        if (
-          c.toLowerCase() ===
-          b.toLowerCase()
-        ) {
-          console.log("got it")
-          x = building["y"];
-          y = building["x"];
-          sessionStorage.setItem("loc",building.ID)
-          this.setState({
-            popup: building.ID
-          });
-         
-          f = 1;
-          return;
-        }
-        return 0;
-      })
-      if (f === 1) {
-        console.log("hello")
-        console.log(x, y, this.state.val);
-        this.setState({
-          srch: true,
-          endLa: x,
-          endLo: y
-        });
-        return;
-        // this.map.setView(new L.LatLng(x, y), 19);
-      } 
-      else if(f===0) {
-        alert("no such building");
+      if(this.state.data && f!==1){
+        this.state.data.map((building) => {
+          const regex = /[^a-z0-9]+/gi;
+          
+          const b= building["ID"].replace(regex, "");
+          const c= val.replace(regex, "");
+          // console.log(b,c)
+          if (
+            c.toLowerCase() ===
+            b.toLowerCase()
+          ) {
+            console.log("got it")
+            x = building["y"];
+            y = building["x"];
+            sessionStorage.setItem("loc",building.ID)
+            this.setState({
+              popup: building.ID
+            });
+           
+            f = 1;
+            return;
+          }
+          return 0;
+        })
       }
+        if (f === 1) {
+          console.log("hello")
+          console.log(x, y, this.state.val);
+          this.setState({
+            srch: true,
+            endLa: x,
+            endLo: y
+          });
+          return;
+          // this.map.setView(new L.LatLng(x, y), 19);
+        } 
+        else if(f===0) {
+          alert("no such building");
+        }
+      
+      
       }, 1000);
-     return await f;
       
     }};   
 
@@ -247,6 +281,10 @@ export default class CetMap extends Component {
       iconUrl: location,
       iconSize: [50, 50]
     });
+    // const buildingGeoJSON = {
+    //   type: 'Point',
+    //   coordinates: this.state.buildingCoordinates,
+    // };
 
     return (
       <div className=" map-container">
@@ -279,6 +317,14 @@ export default class CetMap extends Component {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
+            { this.state.GeoJSON &&
+              <GeoJSON
+              data={this.state.buildingGeoJSON}
+              pointToLayer={(feature, latlng) => {
+                return L.circleMarker(latlng, { radius: 10, color: 'red', fillColor: 'yellow' });
+              }}
+            />
+            }
             {this.state.srch &&  (
               <div>
                 <Marker

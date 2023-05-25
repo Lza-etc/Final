@@ -8,6 +8,23 @@ import splitPath from "./path_split.js";
 // import { pathSplit } from "./path_split";
 
 var spath=1;
+var x=0,y=0;
+var slider=0;
+const loc=sessionStorage.getItem("loc")
+if(loc){
+  if(loc[3]==='1'){
+    slider=0;
+  }
+  else if(loc[3]==='2'){
+    slider=1
+  }
+  else if(loc[3]==='3'){
+    slider=2;
+  }
+}
+else{
+  slider=0;
+}
 function Cse() {
   const canvasRef = useRef(null);
   // const sliderRef = useRef(null);
@@ -25,47 +42,28 @@ function Cse() {
   const [p3,setP3]=useState([])
   const floorData = ["images/CSE0.png", "images/CSE1.png", "images/CSE2.png"];
   const [currentImage, setCurrentImage] = useState("images/CSE0.png");
+  const [sliderValue, setSliderValue] = useState(0);
   const [floorImg, setFloorImage] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
   const [locationImg,setLocationImg]=useState(0);
   const [centerX,setCenterX] =useState(0);
   const [centerY,setCenterY] =useState(0);
   // const [loc,setLoc] =useState(0);
-  const loc=sessionStorage.getItem("loc")
+ 
   const src=sessionStorage.getItem("src")
   const dest=sessionStorage.getItem("dest")
   const [data,setData]=useState([])
   const [radius,setRadius]=useState(0)
   const [over,setOver]=useState(0);
-  var x=0,y=0;
-  var val=0;
-
-
- 
 
 
   useEffect(() => {
     // setLoc(sessionStorage.getItem("loc"));
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    // if(loc){
-    //   if(loc[3]==='1'){
-    //     val=0;
-    //   }
-    //   else if(loc[3]==='2'){
-    //     val=1
-    //   }
-    //   else if(loc[3]==='3'){
-    //     val=2;
-    //   }
-    //   console.log(loc,val)
-    //   sessionStorage.setItem("dest",loc);
-    //   sessionStorage.setItem("slider",val)
-    // }
-    // else{
-    //   sessionStorage.setItem("slider",0)
-    // }
     
+    var z=0;
+    // console.log("useEffects")
     if(loc)
     setRadius(30)
     
@@ -80,6 +78,15 @@ function Cse() {
     //     // sessionStorage.setItem("val",s)
     //     setCurrentImage(floorData[s])
     // } 
+
+    if(src && dest && spath){
+      spath=0;
+      shortestPath(src,dest).then(res=>{
+        console.log("shortest path complete")
+        
+      })
+    }
+  
     const apiUrls = [
       'http://127.0.0.1:5000/floors/cse1',
       'http://127.0.0.1:5000/floors/cse2',
@@ -119,9 +126,10 @@ function Cse() {
           console.log("got it")
           x=building.fx;
           y=building.fy;
+          z=building.z;
           // sessionStorage.setItem("cx",building.fx)
           // sessionStorage.setItem("cy",building.fy)
-          console.log(building.fx,building.fy)
+          // console.log(building.fx,building.fy,building.z)
           return;
         }
         return 0;
@@ -129,7 +137,7 @@ function Cse() {
       // if (f === 1) {
       //   console.log(x, y, loc);
       // } 
-        }, 2000);
+        }, 1000);
       };   
 
     fetchData();
@@ -144,8 +152,11 @@ function Cse() {
       
       setTimeout(() => {
         // Draw the circle
-
-        if(loc){
+       
+        // console.log(z,slider)
+        // console.log(loc,x)
+        if(loc && x && z==slider){
+          
           context.beginPath();
           
           console.log(x,y)
@@ -157,12 +168,17 @@ function Cse() {
           // Draw the text
           context.font = '40px Arial';
           context.fillStyle = "red";
-          context.fillText(loc, x, y+60);
+          context.fillText(dest, x, y+60);
           // sessionStorage.removeItem("loc");
           
         }
+        if (slider !== floorImg) {
+          setFloorImage(slider);
+          setCurrentImage(floorData[slider]);
+          setSliderValue(slider*50);
+        }
       
-    }, 5000);
+    }, 3000);
    
       
       if(floorPath && floorPath.length!=0){
@@ -242,6 +258,8 @@ function Cse() {
   }
   const handleImageChange = (e, val) => {
     console.log(val)
+    slider=val/50;
+    setSliderValue(val);
     if (val / 50 !== floorImg) {
       setFloorImage(val / 50);
       setCurrentImage(floorData[val / 50]);
@@ -310,6 +328,7 @@ function Cse() {
               defaultValue={0}
               step={50}
               orientation="vertical"
+              value={sliderValue}
               valueLabelDisplay="off"
               marks={marks}
               onChange={handleImageChange}

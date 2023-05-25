@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import  {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import "../styles/Mca.css"
 import { Slider } from "@mui/material";
 
-function Mca(){
+function Mca() {
   const canvasRef = useRef(null);
   const floorData = ["images/MCA0.png", "images/MCA1.png", "images/MCA2.png"];
   const [currentImage, setCurrentImage] = useState("images/MCA0.png");
@@ -17,12 +17,12 @@ function Mca(){
     img.src = currentImage;
     context.clearRect(0, 0, canvas.width, canvas.height);
     img.onload = () => {
-      canvas.width = img.naturalWidth;  
+      canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
-      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      context.drawImage(img, 0, 0, canvas.width * 0.75, canvas.height * 0.75);
     };
   }, [currentImage]);
-                                          
+
   const marks = [
     {
       value: 0,
@@ -45,44 +45,47 @@ function Mca(){
     }
   };
 
-  return(
+  return (
     <div>
       <div className="mca-main">
+
         <div className='mca-left text-center'>
-            <Link to="/CSE" className='left-nav-links'>
+          <Link to="/CSE" className='left-nav-links'>
             CSE
-            </Link>
-            <Link to="/MCA" className='left-nav-links left-active-link'>
+          </Link>
+          <Link to="/MCA" className='left-nav-links left-active-link'>
             MCA
-            </Link>
-            <Link to="/MAIN" className='left-nav-links'>
+          </Link>
+          <Link to="/MAIN" className='left-nav-links'>
             MECH
-            </Link>
-            <Link to="/CIVIL" className='left-nav-links'>
+          </Link>
+          <Link to="/CIVIL" className='left-nav-links'>
             CIVIL
-            </Link>
-            <Link to="/EEE" className='left-nav-links'>
+          </Link>
+          <Link to="/EEE" className='left-nav-links'>
             EEE
-            </Link>
+          </Link>
         </div>
+
         <div className="d-flex justify-content-around w-100">
           <div className="mca-mid">
-            <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)" }} />
+            <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)", paddingLeft: "10%", paddingTop: "10%" }} />
           </div>
           <div className="mca-right">
             <Slider
-            aria-label="Custom marks"
-            defaultValue={0}
-            step={50}
-            orientation="vertical"
-            valueLabelDisplay="off"
-            marks={marks}
-            onChange={handleImageChange}
+              aria-label="Custom marks"
+              defaultValue={0}
+              step={50}
+              orientation="vertical"
+              valueLabelDisplay="off"
+              marks={marks}
+              onChange={handleImageChange}
             />
           </div>
         </div>
+        
+      </div>
     </div>
-  </div>
   );
 }
 export default Mca;

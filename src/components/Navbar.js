@@ -78,7 +78,7 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
     try {
       var startLo,startLa,endLa,endLo,fs=0,fd=0;
       console.log(startloc+" "+destiloc)
-
+      sessionStorage.setItem("navi",true)
       await axios.get("http://127.0.0.1:5000/depts").then(res=>{
 
         res.data.depts.map((building) => {

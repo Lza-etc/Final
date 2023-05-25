@@ -11,11 +11,17 @@ const Event = () => {
   const handleLoc=(loc)=>{
     sessionStorage.setItem("loc",loc );
     sessionStorage.setItem("srch",true );
+    // sessionStorage.removeItem("src" );
     console.log(sessionStorage.getItem('loc'))
     // navigate('/')
   }
   useEffect(() => {
     fetchItems();
+
+    sessionStorage.removeItem("navi");
+    sessionStorage.removeItem("loc");
+    sessionStorage.removeItem("src");
+    sessionStorage.removeItem("dest");
   }, []);
 
   const fetchItems = async () => {

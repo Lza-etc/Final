@@ -2,7 +2,6 @@ import { MapLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import "lrm-google";
-import "lrm-graphhopper"
 import { withLeaflet } from "react-leaflet";
 
 class Routing extends MapLayer {
@@ -16,7 +15,6 @@ class Routing extends MapLayer {
         L.latLng(startLoc[0], startLoc[1]),
         L.latLng(endLoc[0], endLoc[1])
       ],
-      // router: new L.Routing.Google(),
       lineOptions: {
         styles: [
           {
@@ -26,8 +24,10 @@ class Routing extends MapLayer {
           }
         ]
       },
-      // addWaypoints: false,
-      router: new L.Routing.graphHopper('83ca6b35-864a-446a-9261-d95847652111','foot'),
+      router: L.Routing.osrmv1({ 
+        serviceUrl: 'https://router.project-osrm.org/route/v1',
+        profile: 'foot'
+      }),
       draggableWaypoints: true,
       fitSelectedRoutes: true,
       showAlternatives: true

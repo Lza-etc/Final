@@ -7,24 +7,34 @@ import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
 // import { pathSplit } from "./path_split";
 
-var spath=1;
-var x=0,y=0;
-var slider=0;
-const loc=sessionStorage.getItem("loc")
-if(loc){
-  if(loc[3]==='1'){
-    slider=0;
-  }
-  else if(loc[3]==='2'){
-    slider=1
-  }
-  else if(loc[3]==='3'){
-    slider=2;
-  }
+import splitPath from "./path_split.js";
+// import { pathSplit } from "./path_split";
+// import drawArrowhead from "ArrowHead"
+
+
+  
+function drawArrowhead(context, from, to) {
+  var dx = to[0] - from[0];
+  var dy = to[1] - from[1];
+  var angle = Math.atan2(dy, dx);
+  var arrowLength = 10;
+
+  context.beginPath();
+  context.moveTo(to[0], to[1]);
+  context.lineTo(
+    to[0] - arrowLength * Math.cos(angle - Math.PI / 6),
+    to[1] - arrowLength * Math.sin(angle - Math.PI / 6)
+  );
+  context.moveTo(to[0], to[1]);
+  context.lineTo(
+    to[0] - arrowLength * Math.cos(angle + Math.PI / 6),
+    to[1] - arrowLength * Math.sin(angle + Math.PI / 6)
+  );
+  context.stroke();
+  context.closePath();
 }
-else{
-  slider=0;
-}
+
+
 function Cse() {
   const canvasRef = useRef(null);
   // const sliderRef = useRef(null);
@@ -48,6 +58,9 @@ function Cse() {
   const [locationImg,setLocationImg]=useState(0);
   const [centerX,setCenterX] =useState(0);
   const [centerY,setCenterY] =useState(0);
+
+
+
   // const [loc,setLoc] =useState(0);
  
   const src=sessionStorage.getItem("src")
@@ -179,17 +192,23 @@ function Cse() {
         }
       
     }, 3000);
-   
+      if (floorPath && floorPath.length !== 0) {
+        context.beginPath();
+        context.moveTo(floorPath[0][0], floorPath[0][1]);
       
-      if(floorPath && floorPath.length!=0){
-        context.beginPath()
-        context.moveTo(floorPath[0][0],floorPath[0][1])
-        for(var i=1;i<floorPath.length;i++){
-          context.lineTo(floorPath[i][0],floorPath[i][1])
+        for (var i = 1; i < floorPath.length; i++) {
+          context.lineTo(floorPath[i][0], floorPath[i][1]);
         }
-        context.stroke()
-        context.closePath()
+      
+        context.stroke();
+        context.closePath();
+      
+        // Add arrowheads
+        for (var i = 1; i < floorPath.length; i++) {
+          drawArrowhead(context, floorPath[i - 1], floorPath[i]);
+        }
       }     
+
     };
   // sessionStorage.removeItem("loc")  
 

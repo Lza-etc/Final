@@ -14,6 +14,18 @@
     "@react-leaflet/core": "^2.0.0",
     "axios": "^1.3.4",
     "bootstrap": "5.2.3",
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+    "cdbreact": "^1.5.3",
+    "dotenv": "^16.0.1",
+    "firebase": "^9.22.0",
+    "fuse.js": "^6.6.2",
+    "fuzzball": "^2.1.2",
+>>>>>>> Stashed changes
+    "leaflet": "1.5.1",
+>>>>>>> Stashed changes
     "cdbreact": "^1.5.3",
     "dotenv": "^16.0.1",
     "firebase": "^9.22.0",

@@ -7,7 +7,7 @@ import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
 // import { pathSplit } from "./path_split";
 
-import splitPath from "./path_split.js";
+// import splitPath from "./path_split.js";
 // import { pathSplit } from "./path_split";
 // import drawArrowhead from "ArrowHead"
 

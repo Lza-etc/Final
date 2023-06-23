@@ -484,4 +484,4 @@ export default class CetMap extends Component {
       );
     }
   }
-
+}

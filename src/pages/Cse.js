@@ -5,11 +5,13 @@ import "../styles/Cse.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
+import {DrawArrowHead} from "../components/DrawArrowHead";
 // import { pathSplit } from "./path_split";
 
 var spath=1;
 var x=0,y=0;
 var slider=0;
+
 const loc=sessionStorage.getItem("loc")
 if(loc){
   if(loc[3]==='1'){
@@ -52,13 +54,14 @@ function Cse() {
  
   const src=sessionStorage.getItem("src")
   const dest=sessionStorage.getItem("dest")
+  const dept=sessionStorage.getItem("dept")
   const [data,setData]=useState([])
-  const [radius,setRadius]=useState(0)
-  const [over,setOver]=useState(0);
-
 
   useEffect(() => {
     // setLoc(sessionStorage.getItem("loc"));
+    if(dept!=="cse"){
+      sessionStorage.setItem("dept","cse");
+    }
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     
@@ -187,12 +190,27 @@ function Cse() {
         for(var i=1;i<floorPath.length;i++){
           context.lineTo(floorPath[i][0],floorPath[i][1])
         }
+        context.lineWidth = 9;
         context.stroke()
         context.closePath()
+        for (var i = 2; i < floorPath.length; i++) {
+          DrawArrowHead(context, floorPath[i - 1], floorPath[i]);
+        }
+      
       }     
     };
-  // sessionStorage.removeItem("loc")  
+    const handleRefresh = (event) => {
+      // Code to execute when the refresh action is triggered
+      sessionStorage.removeItem("loc");
+      // Perform additional actions or call functions here
 
+    };
+    // sessionStorage.removeItem("loc")  
+    window.addEventListener('beforeunload', handleRefresh);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleRefresh);
+    };
 
 
   }, [currentImage]);

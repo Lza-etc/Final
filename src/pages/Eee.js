@@ -38,8 +38,8 @@ function Eee() {
   const [p0,setP0]=useState([])
   const [sliderValue, setSliderValue] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
-  const floorData = [ "images/Eeeb.png", "images/Eee0.png", "images/Eee1.png","images/Eee2.png"];
-  const [currentImage, setCurrentImage] = useState( "images/Eeeb.png");
+  const floorData = [ "https://raw.githubusercontent.com/Lza-etc/imageData/main/Eeeb.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/Eee0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/Eee1.png","https://raw.githubusercontent.com/Lza-etc/imageData/main/Eee2.png"];
+  const [currentImage, setCurrentImage] = useState( "https://raw.githubusercontent.com/Lza-etc/imageData/main/Eeeb.png");
   const [floorImg, setFloorImage] = useState(0);
 
 

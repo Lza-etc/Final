@@ -1,10 +1,7 @@
 import React from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import "../styles/Profile.css";
-// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
-// import edit from "../assets/images/edit-icon.png";
-// import bg from "../assets/images/bg.jpeg";
 
 const Profile = () => {
     const navigate = useNavigate();
@@ -29,8 +26,8 @@ const Profile = () => {
             <Box className="profile-box-main">
                 <div className="profile-left">
                     <div className="left-name">
-                        <img className="logo-img" src="images/ieee-logo.jpg"/>
-                        <img className="edit-img" src="images/edit-icon.png"/>
+                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
+                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -41,7 +38,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="profile-right">
-                    <img className="bg-img" src="images/bg.jpeg"/>
+                    <img className="bg-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/images/bg.jpeg"/>
                 </div>
             </Box>
             

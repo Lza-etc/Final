@@ -32,8 +32,8 @@ function Civil() {
   const [p3, setP3] = useState([])
   const [sliderValue, setSliderValue] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
-  const floorData = ["images/CE0.png", "images/CE1.png", "images/CE2.png"];
-  const [currentImage, setCurrentImage] = useState("images/CE0.png");
+  const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/CE0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/CE1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/CE2.png"];
+  const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/CE0.png");
   const [floorImg, setFloorImage] = useState(0);
 
 

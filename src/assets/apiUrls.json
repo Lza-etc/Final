@@ -1,0 +1,42 @@
+[
+    {
+        "dept":"cse",
+        "apiUrls": [
+            "http://127.0.0.1:5000/floors/cse1",
+            "http://127.0.0.1:5000/floors/cse2",
+            "http://127.0.0.1:5000/floors/cse0"
+          ]
+    },
+    {
+        "dept":"civil",
+        "apiUrls": [
+            "http://127.0.0.1:5000/floors/cse1",
+            "http://127.0.0.1:5000/floors/cse2",
+            "http://127.0.0.1:5000/floors/cse0"
+          ]
+    },
+    {
+        "dept":"mech",
+        "apiUrls": [
+            "http://127.0.0.1:5000/floors/cse1",
+            "http://127.0.0.1:5000/floors/cse2",
+            "http://127.0.0.1:5000/floors/cse0"
+          ]
+    },
+    {
+        "dept":"eee",
+        "apiUrls": [
+            "http://127.0.0.1:5000/floors/cse1",
+            "http://127.0.0.1:5000/floors/cse2",
+            "http://127.0.0.1:5000/floors/cse0"
+          ]
+    },
+    {
+        "dept":"mca",
+        "apiUrls": [
+            "http://127.0.0.1:5000/floors/cse1",
+            "http://127.0.0.1:5000/floors/cse2",
+            "http://127.0.0.1:5000/floors/cse0"
+          ]
+    }
+]

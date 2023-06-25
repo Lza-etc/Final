@@ -41,8 +41,8 @@ function Mech() {
   const [sliderValue, setSliderValue] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
 
-  const floorData = ["images/me_floor.png", "images/me_1.png", "images/me_2.png"];
-  const [currentImage, setCurrentImage] = useState("images/me_floor.png");
+  const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/me_floor.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/me_1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/me_2.png"];
+  const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/me_floor.png");
   const [floorImg, setFloorImage] = useState(0);
   const [locationImg,setLocationImg]=useState(0);
 

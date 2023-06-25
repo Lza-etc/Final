@@ -3,9 +3,7 @@ import {Routes, Route, useNavigate, BrowserRouter} from 'react-router-dom';
 import axios from 'axios';
 import EventForm from './Eventform';
 import "../styles/Addevent.css";
-// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
-// import edit from "../assets/images/edit-icon.png";
 
 
 const AddEvent = () => {
@@ -30,8 +28,8 @@ const AddEvent = () => {
             <Box className="addevent-box-main">
                 <div className="addevent-left">
                     <div className="left-name">
-                        <img className="logo-img" src="images/ieee-logo.jpg"/>
-                        <img className="edit-img" src="images/edit-icon.png"/>
+                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
+                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>

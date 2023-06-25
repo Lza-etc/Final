@@ -9,11 +9,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 // import Typography from '@mui/material/Typography';
 // import { CardActionArea } from '@mui/material';
 import "../styles/ShowEvent.css";
-// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
-// import edit from "../assets/images/edit-icon.png";
-// import event1 from "../assets/images/event1.jpeg";
-// import event2 from "../assets/images/event2.jpeg";
 
 
 const ShowEvent = () => {
@@ -55,8 +51,8 @@ const ShowEvent = () => {
             <Box className="se-box-main">
                 <div className="se-left">
                     <div className="left-name">
-                        <img className="logo-img" src="images/ieee-logo.jpg"/>
-                        <img className="edit-img" src="images/edit-icon.png"/>
+                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
+                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>

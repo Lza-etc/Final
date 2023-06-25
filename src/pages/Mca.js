@@ -36,8 +36,8 @@ function Mca() {
   const [p3,setP3]=useState([])
   const [sliderValue, setSliderValue] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
-  const floorData = ["images/MCA0.png", "images/MCA1.png", "images/MCA2.png"];
-  const [currentImage, setCurrentImage] = useState("images/MCA0.png");
+  const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/MCA0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/MCA1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/MCA2.png"];
+  const [currentImage, setCurrentImage] = useState("ihttps://raw.githubusercontent.com/Lza-etc/imageData/main/MCA0.png");
   const [floorImg, setFloorImage] = useState(0);
 
 

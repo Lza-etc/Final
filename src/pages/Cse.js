@@ -5,7 +5,8 @@ import "../styles/Cse.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
-import {DrawArrowHead} from "../components/DrawArrowHead";
+import { plotPath } from "../components/PlotPath";
+import { DrawCircle } from "../components/DrawCircle";
 // import { pathSplit } from "./path_split";
 
 var spath=1;
@@ -42,8 +43,8 @@ function Cse() {
   const [p1,setP1]=useState([])
   const [p2,setP2]=useState([])
   const [p3,setP3]=useState([])
-  const floorData = ["images/CSE0.png", "images/CSE1.png", "images/CSE2.png"];
-  const [currentImage, setCurrentImage] = useState("images/CSE0.png");
+  const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE2.png"];
+  const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE0.png");
   const [sliderValue, setSliderValue] = useState(0);
   const [floorImg, setFloorImage] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
@@ -62,6 +63,26 @@ function Cse() {
     if(dept!=="cse"){
       sessionStorage.setItem("dept","cse");
     }
+
+    executeCode();
+    plotPath();
+    
+    const handleRefresh = (event) => {
+      // Code to execute when the refresh action is triggered
+      sessionStorage.removeItem("loc");
+      // Perform additional actions or call functions here
+
+    };
+    // sessionStorage.removeItem("loc")  
+    window.addEventListener('beforeunload', handleRefresh);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleRefresh);
+    };
+
+  }, [currentImage]);
+
+  const executeCode = () =>{
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     
@@ -130,22 +151,20 @@ function Cse() {
           x=building.fx;
           y=building.fy;
           z=building.z;
-          // sessionStorage.setItem("cx",building.fx)
-          // sessionStorage.setItem("cy",building.fy)
-          // console.log(building.fx,building.fy,building.z)
           return;
         }
         return 0;
       })
-      // if (f === 1) {
-      //   console.log(x, y, loc);
-      // } 
         }, 1000);
       };   
 
     fetchData();
 
-    
+    imageLoad(canvas,context,img)
+
+  }
+
+  const imageLoad = (canvas,context,img) =>{
     img.onload = () => {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
@@ -155,26 +174,8 @@ function Cse() {
       
       setTimeout(() => {
         // Draw the circle
+       DrawCircle(context);
        
-        // console.log(z,slider)
-        // console.log(loc,x)
-        if(loc && x && z==slider){
-          
-          context.beginPath();
-          
-          console.log(x,y)
-          context.arc(x*3.6, y*3.6, 20, 0, 2 * Math.PI);
-          context.fillStyle = "blue";
-          context.fill();
-          context.closePath();
-          
-          // Draw the text
-          context.font = '40px Arial';
-          context.fillStyle = "red";
-          context.fillText(dest, x, y+60);
-          // sessionStorage.removeItem("loc");
-          
-        }
         if (slider !== floorImg) {
           setFloorImage(slider);
           setCurrentImage(floorData[slider]);
@@ -183,38 +184,9 @@ function Cse() {
       
     }, 3000);
    
-      
-      if(floorPath && floorPath.length!=0){
-        context.beginPath()
-        context.moveTo(floorPath[0][0],floorPath[0][1])
-        for(var i=1;i<floorPath.length;i++){
-          context.lineTo(floorPath[i][0],floorPath[i][1])
-        }
-        context.lineWidth = 9;
-        context.stroke()
-        context.closePath()
-        for (var i = 2; i < floorPath.length; i++) {
-          DrawArrowHead(context, floorPath[i - 1], floorPath[i]);
-        }
-      
-      }     
-    };
-    const handleRefresh = (event) => {
-      // Code to execute when the refresh action is triggered
-      sessionStorage.removeItem("loc");
-      // Perform additional actions or call functions here
-
-    };
-    // sessionStorage.removeItem("loc")  
-    window.addEventListener('beforeunload', handleRefresh);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleRefresh);
-    };
-
-
-  }, [currentImage]);
-
+     plotPath(context,floorPath);     
+  }
+  }
 
   const marks = [
     {

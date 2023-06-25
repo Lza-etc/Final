@@ -2,10 +2,7 @@
 import React from 'react';
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import "../styles/Org.css";
-// import ieee from "../assets/images/ieee-logo.jpg";
 import { Box } from '@mui/material';
-// import edit from "../assets/images/edit-icon.png";
-// import Groupimg from "../assets/images/org.jpg";
 
 const Org = () => {
     const navigate = useNavigate();
@@ -30,8 +27,8 @@ const Org = () => {
             <Box className="org-box-main">
                 <div className="org-left">
                     <div className="left-name">
-                        <img className="logo-img" src="images/ieee-logo.jpg"/>
-                        <img className="edit-img" src="images/edit-icon.png"/>
+                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
+                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -55,7 +52,7 @@ const Org = () => {
                     role, even after their student life.
                     </div>
                     <div className='org-right-img'>
-                        <img className="group-img" src="images/org.jpg" alt="img" />
+                        <img className="group-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/org.jpg" alt="img" />
                     </div>
                 </div>
             </Box>

@@ -11,14 +11,10 @@
     margin-left: 20cm;
 }
 
+form{
+    flex-direction: row;
+}
+
 #map > div > div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-tile-pane > div > div> img{
     padding: 0%;
 }
-
-/* #map > div > div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-overlay-pane > svg > g > path {
- color: black;
- fill: black;
- fill-opacity: 0.4;
- opacity: 0.8;
- stroke-width: 1;
-} */

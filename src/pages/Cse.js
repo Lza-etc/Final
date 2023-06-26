@@ -102,7 +102,7 @@ function Cse() {
       window.removeEventListener('beforeunload', handleRefresh);
     };
 
-  }, [currentImage,p1,p2,p3]);
+  }, [currentImage]);
 
   const executeCode = () => {
     const canvas = canvasRef.current;

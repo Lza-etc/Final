@@ -38,7 +38,7 @@ function Mca() {
   const [sliderValue, setSliderValue] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
   const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/MCA0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/MCA1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/MCA2.png"];
-  const [currentImage, setCurrentImage] = useState("ihttps://raw.githubusercontent.com/Lza-etc/imageData/main/MCA0.png");
+  const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/MCA0.png");
   const [floorImg, setFloorImage] = useState(0);
 
 
@@ -89,7 +89,7 @@ function Mca() {
       window.removeEventListener('beforeunload', handleRefresh);
     };
 
-  }, [currentImage,p1,p2,p3]);
+  }, [currentImage]);
 
   const executeCode = () => {
     const canvas = canvasRef.current;

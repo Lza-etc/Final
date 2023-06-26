@@ -22,14 +22,10 @@ export default function splitPath(data, length)
 	{
 		if(Number(data[i].z) != floor)
 		{
-			temp.push([data[i].fx, data[i].fy])
 			path[floor] = temp;
-			temp = [path[floor][path[floor].length -1]]
-			temp.push([data[i].fx, data[i].fy])
-			temp2.push(data[i].id)
-			ids[floor] = temp2
-			temp2 = [ids[floor][ids[floor].length - 1]] 
-			temp2.push(data[i].id)
+			temp = [[data[i].fx, data[i].fy]]
+			ids[floor] = temp2 
+			temp2 = [data[i].id]
 			floor = Number(data[i].z)
 		}
 		else 

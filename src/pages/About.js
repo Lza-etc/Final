@@ -20,9 +20,7 @@ const About = () => {
     const navigateAddEvent = () => {
         navigate('/AddEvent');
     };
-    // const navigateLoc = () => {
-    //     navigate('/Location');
-    // };
+
     const navigateShowEvent = () => {
         navigate('/ShowEvent');
     };
@@ -34,8 +32,8 @@ const About = () => {
             <Box className="about-box-main">
                 <div className="about-left">
                     <div className="left-name">
-                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
-                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
+                        <img className="logo-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"}/>
+                        <img className="edit-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"}/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -100,3 +98,4 @@ const About = () => {
   };
   
   export default About;
+

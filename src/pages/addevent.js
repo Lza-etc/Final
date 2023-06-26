@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {Routes, Route, useNavigate, BrowserRouter} from 'react-router-dom';
-import axios from 'axios';
 import EventForm from './Eventform';
 import "../styles/Addevent.css";
 import { Box } from '@mui/material';
@@ -28,8 +27,8 @@ const AddEvent = () => {
             <Box className="addevent-box-main">
                 <div className="addevent-left">
                     <div className="left-name">
-                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
-                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
+                        <img className="logo-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"}/>
+                        <img className="edit-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"}/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -59,51 +58,3 @@ const AddEvent = () => {
   
   export default AddEvent;
 
-
-
-
-
-// import React, { useState } from 'react';
-// import axios from 'axios';
-
-// const EventForm = () => {
-//   const [title, setTitle] = useState('');
-//   const [date, setDate] = useState('');
-
-//   const handleTitleChange = (event) => {
-//     setTitle(event.target.value);
-//   };
-
-//   const handleDateChange = (event) => {
-//     setDate(event.target.value);
-//   };
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-
-//     try {
-//       const response = await axios.post('/api/events', { title, date });
-//       console.log('Event created:', response.data);
-//       // Add any success message or redirect logic here
-//     } catch (error) {
-//       console.error('Error creating event:', error);
-//       // Add error handling logic here
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <div>
-//         <label htmlFor="title">Title:</label>
-//         <input type="text" id="title" value={title} onChange={handleTitleChange} />
-//       </div>
-//       <div>
-//         <label htmlFor="date">Date:</label>
-//         <input type="date" id="date" value={date} onChange={handleDateChange} />
-//       </div>
-//       <button type="submit">Create Event</button>
-//     </form>
-//   );
-// };
-
-// export default EventForm;

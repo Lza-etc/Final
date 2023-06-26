@@ -26,8 +26,8 @@ const Profile = () => {
             <Box className="profile-box-main">
                 <div className="profile-left">
                     <div className="left-name">
-                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
-                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
+                        <img className="logo-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"}/>
+                        <img className="edit-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-logo.png"}/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -38,7 +38,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="profile-right">
-                    <img className="bg-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/images/bg.jpeg"/>
+                    <img className="bg-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/bg.jpeg"}/>
                 </div>
             </Box>
             

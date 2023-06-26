@@ -1,70 +1,61 @@
 import React, { useEffect, useState } from "react";
-import {Routes, Route, useNavigate} from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
 import axios from "axios";
-import ListGroup from 'react-bootstrap/ListGroup';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Typography from '@mui/material/Typography';
-// import { CardActionArea } from '@mui/material';
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "../styles/ShowEvent.css";
-import { Box } from '@mui/material';
-
+import { Box } from "@mui/material";
+import event1 from "../assets/images/event1.jpeg";
+import event2 from "../assets/images/event2.jpeg";
 
 const ShowEvent = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const navigateAbout = () => {
-         navigate('/About');
-    };
-    const navigateAddEvent = () => {
-        navigate('/AddEvent');
-    };
-    // const navigateLoc = () => {
-    //     navigate('/Location');
-    // };
-    const navigateShowEvent = () => {
-        navigate('/ShowEvent');
-    };
-    const navigateOrg = () => {
-        navigate('/Org');
-    };
+  const navigateAbout = () => {
+    navigate("/About");
+  };
+  const navigateAddEvent = () => {
+    navigate("/AddEvent");
+  };
+  const navigateShowEvent = () => {
+    navigate("/ShowEvent");
+  };
+  const navigateOrg = () => {
+    navigate("/Org");
+  };
 
-    const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
 
-    useEffect(() => {
-      fetchItems();
-    }, []);
-  
-    const fetchItems = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/events");
-        setItems(response.data.events);
-        // console.log(response.data)
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    return (
-        <div className="se-main">
-            <Box className="se-box-main">
-                <div className="se-left">
-                    <div className="left-name">
-                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
-                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
-                    </div>
-                    <div className="left-buttons">
-                        <button onClick={navigateOrg}> IEEE Organisation </button>
-                        {/* <button onClick={navigateLoc}> LOCATION </button> */}
-                        <button onClick={navigateShowEvent}> EVENTS </button>
-                        <button onClick={navigateAddEvent}> ADD EVENT </button>
-                        <button onClick={navigateAbout}> ABOUT </button>
-                    </div>
-                </div>
-                <div className="se-right">
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const fetchItems = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/events");
+      setItems(response.data.events);
+      // console.log(response.data)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return (
+    <div className="se-main">
+      <Box className="se-box-main">
+        <div className="se-left">
+          <div className="left-name">
+            <img className="logo-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"} />
+            <img className="edit-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-logo.png"} />
+          </div>
+          <div className="left-buttons">
+            <button onClick={navigateOrg}> IEEE Organisation </button>
+            {/* <button onClick={navigateLoc}> LOCATION </button> */}
+            <button onClick={navigateShowEvent}> EVENTS </button>
+            <button onClick={navigateAddEvent}> ADD EVENT </button>
+            <button onClick={navigateAbout}> ABOUT </button>
+          </div>
+        </div>
+        <div className="se-right">
           <div>
-            <h3 className="event-heading">Events</h3>
+            <h3 className="event-heading">EVENTS</h3>
             <div className="se-right-card">
               {items.map((item) => {
                 return (

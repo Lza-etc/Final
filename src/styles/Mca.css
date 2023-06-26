@@ -14,13 +14,11 @@
 img{
     padding: 1px 8px;
     height: calc(100vh - 71px);
-    
 }
-
 
 .mca-right{
     padding-top: 60px;
-    padding-left: 0px;
+    padding-left: 10px;
     padding-bottom: 60px;
     color: #05386B;
 }

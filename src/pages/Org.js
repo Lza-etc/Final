@@ -5,6 +5,18 @@ import "../styles/Org.css";
 import { Box } from '@mui/material';
 
 const Org = () => {
+    // let x=`### Hello there 👋 \
+    // - I Love Science, Math and programming \
+    // - I\’m currently doing my Bachelors in Computer Science at College of Engineering Trivandrum \
+    // - How to reach me: \
+    //     - [LinkedIn](https://www.linkedin.com/in/harishankar-s-kumar-780ba31b5) \
+    //     - [Portfolio](https://harisk20.github.io) \
+    // <div align=center> \
+    // </div>  \
+    // <br>\
+    // The awesome Stats card are made using the resource [here](https://github.com/anuraghazra/github-readme-stats) \
+    // `
+
     const navigate = useNavigate();
 
     const navigateAbout = () => {
@@ -13,9 +25,7 @@ const Org = () => {
     const navigateAddEvent = () => {
         navigate('/AddEvent');
     };
-    // const navigateLoc = () => {
-    //     navigate('/Location');
-    // };
+   
     const navigateShowEvent = () => {
         navigate('/ShowEvent');
     };
@@ -27,8 +37,8 @@ const Org = () => {
             <Box className="org-box-main">
                 <div className="org-left">
                     <div className="left-name">
-                        <img className="logo-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"/>
-                        <img className="edit-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"/>
+                        <img className="logo-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"}/>
+                        <img className="edit-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-logo.png"}/>
                     </div>
                     <div className="left-buttons">
                         <button onClick={navigateOrg}> IEEE Organisation </button>
@@ -38,7 +48,9 @@ const Org = () => {
                         <button onClick={navigateAbout}> ABOUT </button>
                     </div>
                 </div>
-                <div className="org-right">
+                <div className="org-right"> 
+                    
+                    {/* <MarkdownRenderer markdownContent={x}/> */}
                     <div className='org-right-text'>
                     We at IEEE SB CET aim to provide 
                     a technical home, a place where each student 
@@ -52,7 +64,7 @@ const Org = () => {
                     role, even after their student life.
                     </div>
                     <div className='org-right-img'>
-                        <img className="group-img" src="https://raw.githubusercontent.com/Lza-etc/imageData/main/org.jpg" alt="img" />
+                        <img className="group-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/org.jpg"} alt="img" />
                     </div>
                 </div>
             </Box>

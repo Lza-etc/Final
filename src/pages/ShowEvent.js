@@ -41,7 +41,7 @@ const ShowEvent = () => {
         <div className="se-left">
           <div className="left-name">
             <img className="logo-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/ieee-logo.jpg"} />
-            <img className="edit-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-logo.png"} />
+            <img className="edit-img" src={"https://raw.githubusercontent.com/Lza-etc/imageData/main/edit-icon.png"} />
           </div>
           <div className="left-buttons">
             <button onClick={navigateOrg}> IEEE Organisation </button>

@@ -3,8 +3,6 @@ import axios from "axios";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "../styles/ShowEvent.css";
 import { Box } from "@mui/material";
-import event1 from "../assets/images/event1.jpeg";
-import event2 from "../assets/images/event2.jpeg";
 
 const ShowEvent = () => {
   const navigate = useNavigate();

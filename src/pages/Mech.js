@@ -85,25 +85,10 @@ function Mech() {
       })
     }
   
-    const apiUrls = [
-      'http://127.0.0.1:5000/floors/cse1',
-      'http://127.0.0.1:5000/floors/cse2',
-      'http://127.0.0.1:5000/floors/cse0'
-    ];
-
-    const apiRequests = apiUrls.map(url => fetch(url).then(response => response.json()));
-
-    Promise.all(apiRequests)
-      .then(responses => {
-        var combinedResponse = [];
-        responses.forEach((response, index) => {
-          combinedResponse = [...combinedResponse,...response.rooms];
-        });
-
-        // Do something with the combined response object
-        // console.log('Combined Response:', combinedResponse);
-        setData(combinedResponse);
-      })
+    await axios.get("http://127.0.0.1:5000/floors/me1").then(res=>{
+        console.log(res)
+        setData(res);
+    })
       .catch(error => {
         console.error('Error:', error);
       });

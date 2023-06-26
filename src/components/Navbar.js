@@ -29,9 +29,14 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
     const fetchData = async () => {
       
     const apiUrls = [
-      'http://127.0.0.1:5000/floors/cse1',
-      'http://127.0.0.1:5000/floors/cse2',
-      'http://127.0.0.1:5000/floors/cse0'
+      'http://127.0.0.1:5000/floors/cse',
+      'http://127.0.0.1:5000/floors/mca',
+      'http://127.0.0.1:5000/floors/eee',
+      'http://127.0.0.1:5000/floors/ec1',
+      'http://127.0.0.1:5000/floors/ec2',
+      'http://127.0.0.1:5000/floors/ce1',
+      'http://127.0.0.1:5000/floors/me1',
+      'http://127.0.0.1:5000/floors/me2',
     ];
 
     const apiRequests = apiUrls.map(url => fetch(url).then(response => response.json()));
@@ -58,23 +63,28 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
 
 
   const onChangeStart = (event) => {
-    if (!isCancelled)
+    // if (!isCancelled)
     setStartLoc(event.target.value);
     
   };
 
   const onChangeDesti = (event) => {
-    if (!isCancelled)
+    // if (!isCancelled)
     setDestiLoc(event.target.value);
   };
 
   const handleCancel = () => {
     setStartLoc('');
     setDestiLoc('');
+    sessionStorage.removeItem("src");
+    sessionStorage.removeItem("dest");
+    sessionStorage.setItem("cancel",1)
+    sessionStorage.setItem("spath",1);
     setIsCancelled(true);
   }
 
   const handleNavi = async(event) => {
+    sessionStorage.setItem("spath",1);
     try {
       var startLo,startLa,endLa,endLo,fs=0,fd=0;
       console.log(startloc+" "+destiloc)
@@ -91,6 +101,9 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
             ) {
               startLa = building.y;
               startLo = building.x;
+              sessionStorage.setItem("sx",building.x)
+              sessionStorage.setItem("sy",building.y)
+              sessionStorage.setItem("sz",building.z)
               sessionStorage.setItem("src",building.id) 
               fs = 1;
               return;
@@ -107,6 +120,9 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
           ) {
             endLa = building.y;
             endLo = building.x;
+            sessionStorage.setItem("dx",building.x)
+            sessionStorage.setItem("dy",building.y)
+            sessionStorage.setItem("dz",building.z)
             sessionStorage.setItem("dest",building.id)
             fd = 1;
             return;
@@ -130,6 +146,9 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
             ) {
               startLa = building.y;
               startLo = building.x;
+              sessionStorage.setItem("sx",building.x)
+              sessionStorage.setItem("sy",building.y)
+              sessionStorage.setItem("sz",building.z)
               sessionStorage.setItem("src",building.ID) 
               fs = 1;
               return;
@@ -151,6 +170,9 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
           ) {
             endLa = building.y;
             endLo = building.x;
+            sessionStorage.setItem("dx",building.x)
+            sessionStorage.setItem("dy",building.y)
+            sessionStorage.setItem("dz",building.z)
             sessionStorage.setItem("dest",building.ID)
             fd = 1;
             return;
@@ -171,7 +193,7 @@ const  Navigationbar=({nav,setNav,navi,setNavi,startLa,setStarLa,startLo,setStar
       }else if(fd===0){
         alert("no such ending location");
       }
-      }, 2000);
+      }, 3000);
 
     } catch (err) {
       console.log(err);

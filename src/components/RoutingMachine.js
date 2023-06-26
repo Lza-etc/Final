@@ -30,7 +30,7 @@ class Routing extends MapLayer {
       }),
       draggableWaypoints: true,
       fitSelectedRoutes: true,
-      showAlternatives: true
+      showAlternatives: false
     }).addTo(map.leafletElement);
 
     return leafletElement.getPlan();

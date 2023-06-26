@@ -54,8 +54,8 @@ function Eee() {
     console.log("useEffect");
     spath=sessionStorage.getItem("spath");
     // setLoc(sessionStorage.getItem("loc"));
-    if (dept !== "cse") {
-      sessionStorage.setItem("dept", "cse");
+    if (dept !== "eee") {
+      sessionStorage.setItem("dept", "eee");
     }
     if (cancel) {
       setP1([])
@@ -182,7 +182,7 @@ function Eee() {
         if (slider !== floorImg) {
           setFloorImage(slider);
           setCurrentImage(floorData[slider]);
-          setSliderValue(slider * 50);
+          setSliderValue(slider * 33);
         }
 
       }, 3000);

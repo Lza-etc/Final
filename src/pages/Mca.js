@@ -266,50 +266,56 @@ function Mca() {
         setFloorPath(p3);
     }
   };
-
-  return (
-    <div>
-      <div className="mca-main">
-
-        <div className='mca-left text-center'>
+  return(
+    <div className="dept-main">
+      <div className='dept-left text-center'>
           <Link to="/CSE" className='left-nav-links'>
-            CSE
+          CSE
           </Link>
-          <Link to="/MCA" className='left-nav-links left-active-link'>
-            MCA
-          </Link>
-          <Link to="/MAIN" className='left-nav-links'>
-            MECH
+          <Link to="/MCA" className='left-nav-links '>
+          MCA
           </Link>
           <Link to="/CIVIL" className='left-nav-links'>
-            CIVIL
+          CIVIL
+          </Link>
+          <Link to="/CIVIL2" className='left-nav-links'>
+          CIVIL-II
+          </Link>
+          <Link to="/Arch" className='left-nav-links'>
+          ARCHIE
+          </Link>
+          <Link to="/MAIN" className='left-nav-links'>
+          MECH
+          </Link>
+          <Link to="/MAIN2" className='left-nav-links'>
+          MECH-II
           </Link>
           <Link to="/EEE" className='left-nav-links'>
-            EEE
+          EEE
           </Link>
-        </div>
-
-        <div className="d-flex justify-content-around w-100">
-          <div className="mca-mid">
-            <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)", paddingLeft: "10%", paddingTop: "10%" }} />
-          </div>
-          <div className="mca-right">
-            <Slider
-
-              aria-label="Custom marks"
-              defaultValue={0}
-              step={50}
-              orientation="vertical"
-              value={sliderValue}
-              valueLabelDisplay="off"
-              marks={marks}
-              onChange={handleImageChange}
-            />
-          </div>
-        </div>
-        
+          <Link to="/EC" className="left-nav-links">
+          EC
+        </Link>
+          <Link to="/EC2" className='left-nav-links'>
+          EC-II
+          </Link>
       </div>
-    </div>
-  );
+      <div className="dept-mid">
+        <canvas ref={canvasRef}/>
+      </div>
+      <div className="dept-right">
+        <Slider
+        aria-label="Custom marks"
+        defaultValue={0}
+        step={50}
+        orientation="vertical"
+        value={sliderValue}
+        valueLabelDisplay="off"
+        marks={marks}
+        onChange={handleImageChange}
+        />
+      </div>
+  </div>
+);
 }
 export default Mca;

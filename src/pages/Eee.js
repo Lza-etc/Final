@@ -278,46 +278,57 @@ function Eee() {
 
 
   return (
-    <div>
-      <div className="eee-main">
-        <div className="eee-left text-center">
-          <Link to="/CSE" className="left-nav-links ">
-            CSE
+    <div className="dept-main">
+      <div className="dept-left text-center">
+        <Link to="/CSE" className="left-nav-links ">
+          CSE
           </Link>
-          <Link to="/MCA" className="left-nav-links">
-            MCA
+          <Link to="/MCA" className='left-nav-links '>
+          MCA
           </Link>
-            <Link to="/MAIN" className='left-nav-links'>
-            MECH
-            </Link>
-          <Link to="/CIVIL" className="left-nav-links ">
-            CIVIL
+          <Link to="/CIVIL" className='left-nav-links'>
+          CIVIL
           </Link>
-          <Link to="/EEE" className="left-nav-links left-active-link">
-            EEE
+          <Link to="/CIVIL2" className='left-nav-links'>
+          CIVIL-II
           </Link>
-        </div>
-        <div className="d-flex justify-content-around w-90">
-          <div className="eee-mid">
-            <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)" }} />
-          </div>
-          <div className="eee-right">
-            <Slider
-              aria-label="Custom marks"
-              defaultValue={1}
-              step={33}
-              max={99}
-              value={sliderValue}
-              orientation="vertical"
-              valueLabelDisplay="off"
-              marks={marks}
-              onChange={handleImageChange}
-            />
-          </div>
-        </div>
+          <Link to="/Arch" className='left-nav-links'>
+          ARCHIE
+          </Link>
+          <Link to="/MAIN" className='left-nav-links'>
+          MECH
+          </Link>
+          <Link to="/MAIN2" className='left-nav-links'>
+          MECH-II
+          </Link>
+          <Link to="/EEE" className='left-nav-links'>
+          EEE
+          </Link>
+          <Link to="/EC" className="left-nav-links">
+          EC
+        </Link>
+          <Link to="/EC2" className='left-nav-links'>
+          EC-II
+          </Link>
+      </div>
+      <div className="dept-mid">
+        <canvas ref={canvasRef} />
+      </div>
+      <div className="dept-right">
+        <Slider
+          aria-label="Custom marks"
+          defaultValue={0}
+          step={33}
+          max={99}
+          orientation="vertical"
+          value={sliderValue}
+          valueLabelDisplay="off"
+          marks={marks}
+          onChange={handleImageChange}
+        />
       </div>
     </div>
-  );
+);
 }
 export default Eee;
 

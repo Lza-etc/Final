@@ -74,14 +74,6 @@ function Login() {
                   Login
                 </Button>
               </div>
-              <div className="text-left mt-3">
-                <a href="#">
-                  <small className="reset ">Register</small>
-                </a>
-                <a href="#">
-                  <small className="reset ml-2">Forgot Password?</small>
-                </a>
-              </div>
             </Form>
           </Col>
         </Row>

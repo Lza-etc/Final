@@ -4,7 +4,8 @@ import "../styles/Mca.css"
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
-import { DrawArrowHead } from "../components/DrawArrowHead";
+import { plotPath } from "../components/PlotPath";
+import { DrawCircle } from "../components/DrawCircle";
 
 
 var spath=1;
@@ -44,134 +45,148 @@ function Mca() {
   const src=sessionStorage.getItem("src")
   const dest=sessionStorage.getItem("dest")
   const dept=sessionStorage.getItem("dept")
+  const cancel = sessionStorage.getItem("cancel")
   const [data,setData]=useState([])
 
   useEffect(() => {
-    if(dept!=="mca"){
-      sessionStorage.setItem("dept","mca");
+    console.log("useEffect");
+    spath=sessionStorage.getItem("spath");
+    // setLoc(sessionStorage.getItem("loc"));
+    if (dept !== "mca") {
+      sessionStorage.setItem("dept", "mca");
     }
+    if (cancel) {
+      setP1([])
+      setP2([])
+      setP3([])
+      // p1Ref.current = [];
+      // p2Ref.current = [];
+      // p3Ref.current = [];
+      setFloorPath([])
+      setFloorImage(0)
+      slider = 0
+      // setFloorImage(slider);
+      // setCurrentImage(floorData[slider]);
+      // setSliderValue(slider * 50);
+      sessionStorage.removeItem("cancel");
+    }
+
+    executeCode()
+
+
+    const handleRefresh = (event) => {
+      sessionStorage.removeItem("loc");
+      sessionStorage.removeItem("src");
+      sessionStorage.removeItem("dest");
+      slider=0
+      // setFloorImage(slider);
+      // setCurrentImage(floorData[slider]);
+      // setSliderValue(slider * 50);
+    };
+    window.addEventListener('beforeunload', handleRefresh);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleRefresh);
+    };
+
+  }, [currentImage,p1,p2,p3]);
+
+  const executeCode = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
-    var z=0;
+    var z = 0;
     // console.log("useEffects")
-    if(loc)
-    setRadius(30)
+    if (loc)
+      setRadius(30)
 
     const img = new Image();
     img.src = currentImage;
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    const fetchData = async () => {
-      // const s=sessionStorage.getItem("slider")
-    //   if(s !==floorImg){
-    //     setFloorImage(s);
-    //     // sessionStorage.setItem("val",s)
-    //     setCurrentImage(floorData[s])
-    // } 
 
-    if(src && dest && spath){
-      spath=0;
-      shortestPath(src,dest).then(res=>{
-        console.log("shortest path complete")
-        
-      })
-    }
-  
-    await axios.get("http://127.0.0.1:5000/floors/mca").then(res=>{
+    fetchData();
+    imageLoad(canvas, context, img)
+    plotPath(context, floorPath);
+  }
+
+  const fetchData = async () => {
+
+    if (!data) {
+
+      await axios.get("http://127.0.0.1:5000/floors/mca").then(res=>{
         console.log(res)
         setData(res);
     })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+
+    if (src && dest && spath) {
+      spath = 0;
+      shortestPath(src, dest).then(res => {
+        console.log("shortest path complete")
+        // slider=sz
+        // // console.log("slider")
+        // setFloorImage(slider);
+        // setCurrentImage(floorData[slider]);
+        // setSliderValue(slider * 50);
+
+      })
+    }
+    else if (loc) {
 
       setTimeout(() => {
-      console.log("loc"+loc)
-      if(data && loc )
-      data.map((building) => {
-        const regex = /[^a-z0-9]+/gi;
-        
-        const b= building["ID"].replace(regex, "");
-        const c= loc.replace(regex, "");
-        // console.log(b,c)
-        if (
-          c.toLowerCase() ===
-          b.toLowerCase()
-        ) {
-          console.log("got it")
-          x=building.fx;
-          y=building.fy;
-          z=building.z;
-          // sessionStorage.setItem("cx",building.fx)
-          // sessionStorage.setItem("cy",building.fy)
-          // console.log(building.fx,building.fy,building.z)
-          return;
-        }
-        return 0;
-      })
-      // if (f === 1) {
-      //   console.log(x, y, loc);
-      // } 
-        }, 1000);
-      };   
+        console.log("loc" + loc)
+        if (data && loc)
+          data.map((building) => {
+            const regex = /[^a-z0-9]+/gi;
 
-    fetchData();
-    
+            const b = building["ID"].replace(regex, "");
+            const c = loc.replace(regex, "");
+            // console.log(b,c)
+            if (
+              c.toLowerCase() ===
+              b.toLowerCase()
+            ) {
+              console.log("got it")
+              x = building.fx;
+              y = building.fy;
+              z = building.z;
+              return;
+            }
+            return 0;
+          })
+      }, 1000);
+    }
+  };
+
+  const imageLoad = (canvas, context, img) => {
+    // console.log("image load")
     img.onload = () => {
+      // console.log("image load inside")
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
-
-      context.drawImage(img, 0, 0, canvas.width * 0.75, canvas.height * 0.75);
-      context.lineWidth = 20; 
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      context.lineWidth = 20;
       context.strokeStyle = "red";
-      
+
       setTimeout(() => {
         // Draw the circle
-       
-        // console.log(z,slider)
-        // console.log(loc,x)
-        if(loc && x && z==slider){
-          
-          context.beginPath();
-          
-          console.log(x,y)
-          context.arc(x*3.6, y*3.6, 20, 0, 2 * Math.PI);
-          context.fillStyle = "blue";
-          context.fill();
-          context.closePath();
-          
-          // Draw the text
-          context.font = '40px Arial';
-          context.fillStyle = "red";
-          context.fillText(dest, x, y+60);
-          // sessionStorage.removeItem("loc");
-          
-        }
+        DrawCircle(context);
+
         if (slider !== floorImg) {
           setFloorImage(slider);
           setCurrentImage(floorData[slider]);
-          setSliderValue(slider*50);
+          setSliderValue(slider * 50);
         }
-      
-    }, 3000);
-   
-      
-      if(floorPath && floorPath.length!=0){
-        context.beginPath()
-        context.moveTo(floorPath[0][0],floorPath[0][1])
-        for(var i=1;i<floorPath.length;i++){
-          context.lineTo(floorPath[i][0],floorPath[i][1])
-        }
-        context.lineWidth = 9;
-        context.stroke()
-        context.closePath()
-        for (var i = 2; i < floorPath.length; i++) {
-          DrawArrowHead(context, floorPath[i - 1], floorPath[i]);
-        }
-      }     
-    };
-  }, [currentImage]);
+
+      }, 3000);
+
+      plotPath(context, floorPath);
+    }
+  }
 
   const marks = [
     {
@@ -190,15 +205,15 @@ function Mca() {
 
 
  const shortestPath=async(src,dest)=>{
-    if(src[0]!=='C'&&src[1]!=='S'){
-      src="CS_start"
+    if(!(src[0]==='C'&&src[1]==='A')||!(src[0]==='M'&&src[1]==='C'&&src[2]==='A')||!(src[0]==='D'&&src[1]==='C'&&src[2]=='A')){
+      src="CA_101"
     }
     
     try {
       await axios.post('http://127.0.0.1:5000/shortestpath', { 
         src:src,
         dest:dest,
-        dept:"cse"
+        dept:"mca"
        },{
         headers: {
           'Content-Type': 'application/json'
@@ -221,7 +236,7 @@ function Mca() {
       
     } catch (error) {
       // Handle the error
-      console.error("CSEerror",error);
+      console.error("MCAEerror",error);
     }
 
   }

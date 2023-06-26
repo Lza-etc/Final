@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Nav, Button, Form } from "react-bootstrap";
 import "../styles/Cse.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
@@ -40,18 +39,15 @@ function Cse() {
   // var p3=[];
 
 
-  // const [p1, setP1] = useState([])
-  // const [p2, setP2] = useState([])
-  // const [p3, setP3] = useState([])
+  const [p1, setP1] = useState([])
+  const [p2, setP2] = useState([])
+  const [p3, setP3] = useState([])
   
-  const p1Ref = useRef([]);
-  const p2Ref = useRef([]);
-  const p3Ref = useRef([]);
   const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE2.png"];
   const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/CSE0.png");
   const [sliderValue, setSliderValue] = useState(0);
   const [floorImg, setFloorImage] = useState(0);
-  const [floorPath, setFloorPath] = useState(p1Ref.current);
+  const [floorPath, setFloorPath] = useState(p1);
   const [locationImg, setLocationImg] = useState(0);
   const [centerX, setCenterX] = useState(0);
   const [centerY, setCenterY] = useState(0);
@@ -73,12 +69,12 @@ function Cse() {
       sessionStorage.setItem("dept", "cse");
     }
     if (cancel) {
-      // setP1([])
-      // setP2([])
-      // setP3([])
-      p1Ref.current = [];
-      p2Ref.current = [];
-      p3Ref.current = [];
+      setP1([])
+      setP2([])
+      setP3([])
+      // p1Ref.current = [];
+      // p2Ref.current = [];
+      // p3Ref.current = [];
       setFloorPath([])
       setFloorImage(0)
       slider = 0
@@ -106,19 +102,7 @@ function Cse() {
       window.removeEventListener('beforeunload', handleRefresh);
     };
 
-  }, [currentImage,p1Ref.current, p2Ref.current, p3Ref.current]);
-
-  const updateP1 = (newValue) => {
-    p1Ref.current = newValue;
-  };
-
-  const updateP2 = (newValue) => {
-    p2Ref.current = newValue;
-  };
-
-  const updateP3 = (newValue) => {
-    p3Ref.current = newValue;
-  };
+  }, [currentImage,p1,p2,p3]);
 
   const executeCode = () => {
     const canvas = canvasRef.current;
@@ -142,29 +126,16 @@ function Cse() {
   const fetchData = async () => {
 
     if (!data) {
-      const apiUrls = [
-        'http://127.0.0.1:5000/floors/cse1',
-        'http://127.0.0.1:5000/floors/cse2',
-        'http://127.0.0.1:5000/floors/cse0'
-      ];
 
-      const apiRequests = apiUrls.map(url => fetch(url).then(response => response.json()));
-
-      Promise.all(apiRequests)
-        .then(responses => {
-          var combinedResponse = [];
-          responses.forEach((response, index) => {
-            combinedResponse = [...combinedResponse, ...response.rooms];
-          });
-
-          // Do something with the combined response object
-          // console.log('Combined Response:', combinedResponse);
-          setData(combinedResponse);
-        })
+      await axios.get("http://127.0.0.1:5000/floors/cse").then(res=>{
+        console.log(res)
+        setData(res);
+    })
         .catch(error => {
           console.error('Error:', error);
         });
     }
+
     if (src && dest && spath) {
       spath = 0;
       shortestPath(src, dest).then(res => {
@@ -266,11 +237,11 @@ function Cse() {
         // console.log(p.path)
 
         if (p.path[0])
-          updateP1(Array.from(p.path[0], x => [3.6 * x[0], 3.6 * x[1]]))
+          setP1(Array.from(p.path[0], x => [3.6 * x[0], 3.6 * x[1]]))
         if (p.path[1])
-          updateP2(Array.from(p.path[1], x => [3.6 * x[0], 3.6 * x[1]]))
+          setP2(Array.from(p.path[1], x => [3.6 * x[0], 3.6 * x[1]]))
         if (p.path[2])
-          updateP3(Array.from(p.path[2], x => [3.6 * x[0], 3.6 * x[1]]))
+          setP3(Array.from(p.path[2], x => [3.6 * x[0], 3.6 * x[1]]))
         // console.log(p1,p2,p3)
         console.log(p.ids)
         // executeCode()
@@ -305,11 +276,11 @@ function Cse() {
       setCurrentImage(floorData[val / 50]);
 
       if (val === 0)
-        setFloorPath(p1Ref.current);
+        setFloorPath(p1);
       else if (val === 50)
-        setFloorPath(p2Ref.current);
+        setFloorPath(p2);
       else if (val === 100)
-        setFloorPath(p3Ref.current);
+        setFloorPath(p3);
     }
   };
   // const handleClick = (event) => {

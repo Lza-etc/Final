@@ -4,20 +4,21 @@ import "../styles/Civil.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
-import {DrawArrowHead} from "../components/DrawArrowHead";
+import { plotPath } from "../components/PlotPath";
+import { DrawCircle } from "../components/DrawCircle";
 
 var spath = 1;
 var x = 0, y = 0;
 var slider = 0;
 const loc = sessionStorage.getItem("loc")
 if (loc) {
-  if (loc[3] === '1') {
+  if (loc[4] === '1') {
     slider = 0;
   }
-  else if (loc[3] === '2') {
+  else if (loc[4] === '2') {
     slider = 1
   }
-  else if (loc[3] === '3') {
+  else if (loc[4] === '3') {
     slider = 2;
   }
 }
@@ -40,13 +41,49 @@ function Civil() {
   const src = sessionStorage.getItem("src")
   const dest = sessionStorage.getItem("dest")
   const dept=sessionStorage.getItem("dept")
+  const cancel = sessionStorage.getItem("cancel")
   const [data, setData] = useState([])
 
 
   useEffect(() => {
-    if(dept!=="civil"){
-      sessionStorage.setItem("dept","civil");
+    if(dept!=="ce1"){
+      sessionStorage.setItem("dept","ce1");
     }
+    if (cancel) {
+      setP1([])
+      setP2([])
+      setP3([])
+      setFloorPath([])
+      setFloorImage(0)
+      slider = 0
+      // setFloorImage(slider);
+      // setCurrentImage(floorData[slider]);
+      // setSliderValue(slider * 50);
+      sessionStorage.removeItem("cancel");
+    }
+
+    executeCode()
+    
+
+    const handleRefresh = (event) => {
+      sessionStorage.removeItem("loc");
+      sessionStorage.removeItem("src");
+      sessionStorage.removeItem("dest");
+      slider=0
+      // setFloorImage(slider);
+      // setCurrentImage(floorData[slider]);
+      // setSliderValue(slider * 50);
+    };
+    window.addEventListener('beforeunload', handleRefresh);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleRefresh);
+    };
+
+  }, [currentImage,p1,p2,p3]);
+
+
+  const executeCode = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
@@ -55,26 +92,19 @@ function Civil() {
     if (loc)
       setRadius(30)
 
-
     const img = new Image();
     img.src = currentImage;
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    const fetchData = async () => {
-      // const s=sessionStorage.getItem("slider")
-      //   if(s !==floorImg){
-      //     setFloorImage(s);
-      //     // sessionStorage.setItem("val",s)
-      //     setCurrentImage(floorData[s])
-      // } 
 
-      if (src && dest && spath) {
-        spath = 0;
-        shortestPath(src, dest).then(res => {
-          console.log("shortest path complete")
+    fetchData();
+    imageLoad(canvas, context, img)
+    plotPath(context, floorPath);
+  }
 
-        })
-      }
+  const fetchData = async () => {
+
+    if (!data) {
 
       await axios.get("http://127.0.0.1:5000/floors/ce1").then(res=>{
         console.log(res)
@@ -83,6 +113,21 @@ function Civil() {
         .catch(error => {
           console.error('Error:', error);
         });
+    }
+
+    if (src && dest && spath) {
+      spath = 0;
+      shortestPath(src, dest).then(res => {
+        console.log("shortest path complete")
+        // slider=sz
+        // // console.log("slider")
+        // setFloorImage(slider);
+        // setCurrentImage(floorData[slider]);
+        // setSliderValue(slider * 50);
+
+      })
+    }
+    else if (loc) {
 
       setTimeout(() => {
         console.log("loc" + loc)
@@ -101,51 +146,28 @@ function Civil() {
               x = building.fx;
               y = building.fy;
               z = building.z;
-              // sessionStorage.setItem("cx",building.fx)
-              // sessionStorage.setItem("cy",building.fy)
-              // console.log(building.fx,building.fy,building.z)
               return;
             }
             return 0;
           })
-        // if (f === 1) {
-        //   console.log(x, y, loc);
-        // } 
       }, 1000);
-    };
+    }
+  };
 
-    fetchData();
-
+  const imageLoad = (canvas, context, img) => {
+    // console.log("image load")
     img.onload = () => {
+      // console.log("image load inside")
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
       context.lineWidth = 20;
       context.strokeStyle = "red";
 
       setTimeout(() => {
         // Draw the circle
+        DrawCircle(context);
 
-        // console.log(z,slider)
-        // console.log(loc,x)
-        if (loc && x && z == slider) {
-
-          context.beginPath();
-
-          console.log(x, y)
-          context.arc(x * 3.6, y * 3.6, 20, 0, 2 * Math.PI);
-          context.fillStyle = "blue";
-          context.fill();
-          context.closePath();
-
-          // Draw the text
-          context.font = '40px Arial';
-          context.fillStyle = "red";
-          context.fillText(dest, x, y + 60);
-          // sessionStorage.removeItem("loc");
-
-        }
         if (slider !== floorImg) {
           setFloorImage(slider);
           setCurrentImage(floorData[slider]);
@@ -154,25 +176,9 @@ function Civil() {
 
       }, 3000);
 
-
-      if (floorPath && floorPath.length != 0) {
-        context.beginPath()
-        context.moveTo(floorPath[0][0], floorPath[0][1])
-        for (var i = 1; i < floorPath.length; i++) {
-          context.lineTo(floorPath[i][0], floorPath[i][1])
-        }
-        context.lineWidth = 9;
-        context.stroke()
-        context.closePath()
-        for (var i = 2; i < floorPath.length; i++) {
-          DrawArrowHead(context, floorPath[i - 1], floorPath[i]);
-        }
-      }
-
-    };
-  }, [currentImage]);
-
-
+      plotPath(context, floorPath);
+    }
+  }
   const marks = [
     {
       value: 0,
@@ -187,9 +193,8 @@ function Civil() {
       label: "Second Floor",
     },
   ];
-
   const shortestPath = async (src, dest) => {
-    if (src[0] !== 'C' && src[1] !== 'S') {
+    if (src[0] !== 'C' && src[1] !== 'E' && src[2]!=='1') {
       src = "CS_start"
     }
 
@@ -197,7 +202,7 @@ function Civil() {
       await axios.post('http://127.0.0.1:5000/shortestpath', {
         src: src,
         dest: dest,
-        dept: "cse"
+        dept: "ce1"
       }, {
         headers: {
           'Content-Type': 'application/json'
@@ -216,12 +221,14 @@ function Civil() {
           setP3(Array.from(p.path[2], x => [3.6 * x[0], 3.6 * x[1]]))
         // console.log(p1,p2,p3)
         console.log(p.ids)
+        // executeCode()
+
       })
       // Handle the response data
 
     } catch (error) {
       // Handle the error
-      console.error("CSEerror", error);
+      console.error("CE1error", error);
     }
 
   }
@@ -229,6 +236,11 @@ function Civil() {
     spath = 0;
     shortestPath(src, dest).then(res => {
       console.log("shortest path complete")
+      // slider=sz
+      // console.log("slider")
+      // setFloorImage(slider);
+      // setCurrentImage(floorData[slider]);
+      // setSliderValue(slider * 50);
 
     })
   }

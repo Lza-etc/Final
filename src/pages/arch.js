@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../styles/Arch.css";
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
@@ -36,7 +36,7 @@ function Arch() {
   const [p3,setP3]=useState([])
   const [p0,setP0]=useState([])
   const [sliderValue, setSliderValue] = useState(0);
-
+  const [floorPath, setFloorPath] = useState(p1);
   const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/arch_b2.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/arch_basement1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/Arch_ground.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/arch_1.png"];
   const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/arch_b2.png");
   const [floorImg, setFloorImage] = useState(0);
@@ -180,7 +180,7 @@ function Arch() {
         if (slider !== floorImg) {
           setFloorImage(slider);
           setCurrentImage(floorData[slider]);
-          setSliderValue(slider * 50);
+          setSliderValue(slider * 33);
         }
 
       }, 3000);
@@ -275,61 +275,60 @@ function Arch() {
   };
 
   return (
-    <div>
-      <div className="Arch-main">
-        <div className="Arch-left text-center">
-            <Link to="/CSE" className='left-nav-links'>
-            CSE
-            </Link>
-            <Link to="/MCA" className='left-nav-links '>
-            MCA
-            </Link>
-            <Link to="/CIVIL" className='left-nav-links'>
-            CIVIL
-            </Link>
-            <Link to="/CIVIL2" className='left-nav-links'>
-            CIVIL-II
-            </Link>
-            <Link to="/Arch" className='left-nav-links'>
-            ARCHIE
-            </Link>
-            <Link to="/MAIN" className='left-nav-links'>
-            MECH
-            </Link>
-            <Link to="/MAIN2" className='left-nav-links'>
-            MECH-II
-            </Link>
-            <Link to="/EEE" className='left-nav-links'>
-            EEE
-            </Link>
-            <Link to="/EC" className="left-nav-links">
-            EC
-            </Link>
-            <Link to="/EC2" className='left-nav-links'>
-            EC-II
-            </Link>
-        </div>
-        <div className="d-flex justify-content-around w-90">
-          <div className="Arch-mid">
-            <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)" }} />
-          </div>
-          <div className="Arch-right">
-            <Slider
-              aria-label="Custom marks"
-              defaultValue={0}
-              step={33}
-              max={99}
-              orientation="vertical"
-              value={sliderValue}
-              valueLabelDisplay="off"
-              marks={marks}
-              onChange={handleImageChange}
-            />
-          </div>
-        </div>
+    <div className="dept-main">
+      <div className="dept-left text-center">
+          <Link to="/CSE" className='left-nav-links'>
+          CSE
+          </Link>
+          <Link to="/MCA" className='left-nav-links '>
+          MCA
+          </Link>
+          <Link to="/CIVIL" className='left-nav-links'>
+          CIVIL
+          </Link>
+          <Link to="/CIVIL2" className='left-nav-links'>
+          CIVIL-II
+          </Link>
+          <Link to="/Arch" className='left-nav-links'>
+          ARCHIE
+          </Link>
+          <Link to="/MAIN" className='left-nav-links'>
+          MECH
+          </Link>
+          <Link to="/MAIN2" className='left-nav-links'>
+          MECH-II
+          </Link>
+          <Link to="/EEE" className='left-nav-links'>
+          EEE
+          </Link>
+          <Link to="/EC" className="left-nav-links">
+          EC
+          </Link>
+          <Link to="/EC2" className='left-nav-links'>
+          EC-II
+          </Link>
+      </div>
+      <div className="dept-mid">
+        <canvas ref={canvasRef}/>
+      </div>
+      <div className="dept-right">
+        <Slider
+          aria-label="Custom marks"
+          defaultValue={0}
+          step={33}
+          max={99}
+          orientation="vertical"
+          value={sliderValue}
+          valueLabelDisplay="off"
+          marks={marks}
+          onChange={handleImageChange}
+        />
+      </div>
+      <div className="dept-path">
+
       </div>
     </div>
-  );
+);
 }
 export default Arch;
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../styles/Eee.css";
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";

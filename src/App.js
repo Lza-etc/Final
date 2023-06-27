@@ -12,6 +12,8 @@ import Mech from "./pages/Mech";
 import Mech2 from "./pages/Mech2";
 import Civil from "./pages/Civil";
 import Civil2 from "./pages/Civil2";
+
+
 import Eee from "./pages/Eee";
 import Ec from "./pages/Ec";
 import Profile from "./pages/Profile";
@@ -27,15 +29,23 @@ import { ImportExport } from "@mui/icons-material";
 
 function App() {
   const[nav,setNav]=useState(true);
+  const [startLo,setStarLo]=useState(null);
+  const [startLa,setStarLa]=useState(null);
+  const [endLo,setEndLo]=useState(null);
+  const [endLa,setEndLa]=useState(null);
+  const [navi,setNavi]=useState(false);
+  const [loc,setLoc]=useState(null);
+  const [srch,setSrch]=useState(false);
   // const [login, setLogin] = React.useState(false);
   // const navigate = useNavigate();
   return (
     <div className="App">
       
       <Router>
-        <Navigationbar nav={nav} setNav={setNav}/>
+      <Navigationbar nav={nav} setNav={setNav} navi={navi} setNavi={setNavi} endLa={endLa} setEndLo={setEndLo} setEndLa={setEndLa} setStarLa={setStarLa
+        } setStarLo={setStarLo} endLo={endLo} startLa={startLa} startLo={startLo}/>
        < Routes >
-          <Route path="/" element={<Home nav={nav} />} />
+          <Route path="/" element={<Home nav={nav} navi={navi} endLa={endLa} endLo={endLo} startLa={startLa} startLo={startLo} srch={srch} loc={loc}/>} />
           <Route path="/MCA" element={<Mca/>} />
           <Route path="/CSE" element={<Cse/>} />
           <Route path="/CIVIL2" element={<Civil2/>} />
@@ -48,7 +58,7 @@ function App() {
           {/* <Route path="/login" element={<Login/>}> */}
             {/* {login ? useNavigate("/profile")  : <LoginPage setLogin={setLogin} />} */}
           {/* </Route> */}
-          <Route path="/event" element={<Event/>} />
+          <Route path="/event" element={<Event setLoc={setLoc} />} />
           <Route path="/dept" element={<DeptMap nav={nav} />} />
           <Route path="/EEE" element={<Eee/>} />
           <Route path="/EC2" element={<Ec2/>} />

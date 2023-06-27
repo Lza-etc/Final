@@ -1,6 +1,6 @@
 import { DrawArrowHead } from "./DrawArrowHead"
 
-export const plotPath = (context, floorPath) => {
+export const plotPath = (context, floorPath,wt=9) => {
     // console.log("plot path")
     // console.log(floorPath)
     if (floorPath && floorPath.length != 0) {
@@ -10,11 +10,11 @@ export const plotPath = (context, floorPath) => {
         for (var i = 1; i < floorPath.length; i++) {
             context.lineTo(floorPath[i][0], floorPath[i][1])
         }
-        context.lineWidth = 9;
+        context.lineWidth = wt;
         context.stroke()
         context.closePath()
         for (var i = 1; i < floorPath.length; i++) {
-            DrawArrowHead(context, floorPath[i - 1], floorPath[i]);
+            DrawArrowHead(context, floorPath[i - 1], floorPath[i],wt);
         }
     }
 }  

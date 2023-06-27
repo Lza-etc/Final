@@ -1,9 +1,9 @@
-export const DrawArrowHead = (context, from, to) => {
+export const DrawArrowHead = (context, from, to,wt=9) => {
 
     var dx = to[0] - from[0];
     var dy = to[1] - from[1];
     var angle = Math.atan2(dy, dx);
-    var arrowLength = 50;
+    var arrowLength = wt*5;
   
     context.beginPath();
     context.moveTo(to[0], to[1]);

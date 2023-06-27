@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../styles/Civil.css";
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
@@ -10,6 +10,7 @@ import { DrawCircle } from "../components/DrawCircle";
 var spath = 1;
 var x = 0, y = 0;
 var slider = 0;
+const sz=sessionStorage.getItem("sz")
 const loc = sessionStorage.getItem("loc")
 if (loc) {
   if (loc[4] === '1') {
@@ -56,9 +57,7 @@ function Civil() {
       setFloorPath([])
       setFloorImage(0)
       slider = 0
-      // setFloorImage(slider);
-      // setCurrentImage(floorData[slider]);
-      // setSliderValue(slider * 50);
+      spath=1
       sessionStorage.removeItem("cancel");
     }
 
@@ -69,10 +68,8 @@ function Civil() {
       sessionStorage.removeItem("loc");
       sessionStorage.removeItem("src");
       sessionStorage.removeItem("dest");
+      spath=1
       slider=0
-      // setFloorImage(slider);
-      // setCurrentImage(floorData[slider]);
-      // setSliderValue(slider * 50);
     };
     window.addEventListener('beforeunload', handleRefresh);
 
@@ -99,7 +96,7 @@ function Civil() {
 
     fetchData();
     imageLoad(canvas, context, img)
-    plotPath(context, floorPath);
+    // plotPath(context, floorPath);
   }
 
   const fetchData = async () => {
@@ -161,7 +158,7 @@ function Civil() {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
-      context.lineWidth = 20;
+      context.lineWidth = 15;
       context.strokeStyle = "red";
 
       setTimeout(() => {
@@ -176,7 +173,7 @@ function Civil() {
 
       }, 3000);
 
-      plotPath(context, floorPath);
+      plotPath(context, floorPath,3);
     }
   }
   const marks = [
@@ -194,7 +191,7 @@ function Civil() {
     },
   ];
   const shortestPath = async (src, dest) => {
-    if (src[0] !== 'C' && src[1] !== 'E' && src[2]!=='1') {
+    if (!(src[0] === 'C' && src[1] === 'E' && src[2]==='1')) {
       src = "CS_start"
     }
 
@@ -214,11 +211,11 @@ function Civil() {
         // console.log(p.path)
 
         if (p.path[0])
-          setP1(Array.from(p.path[0], x => [3.6 * x[0], 3.6 * x[1]]))
+          setP1(Array.from(p.path[0], x => [1.2 * x[0], 1.1 * x[1]]))
         if (p.path[1])
-          setP2(Array.from(p.path[1], x => [3.6 * x[0], 3.6 * x[1]]))
+          setP2(Array.from(p.path[1], x => [1.2 * x[0], 1.3 * x[1]]))
         if (p.path[2])
-          setP3(Array.from(p.path[2], x => [3.6 * x[0], 3.6 * x[1]]))
+          setP3(Array.from(p.path[2], x => [0.6 * x[0], 0.8 * x[1]]))
         // console.log(p1,p2,p3)
         console.log(p.ids)
         // executeCode()
@@ -236,11 +233,6 @@ function Civil() {
     spath = 0;
     shortestPath(src, dest).then(res => {
       console.log("shortest path complete")
-      // slider=sz
-      // console.log("slider")
-      // setFloorImage(slider);
-      // setCurrentImage(floorData[slider]);
-      // setSliderValue(slider * 50);
 
     })
   }

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../styles/Cse.css";
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
@@ -29,16 +29,6 @@ else {
 }
 function Cse() {
   const canvasRef = useRef(null);
-  // const sliderRef = useRef(null);
-
-  // const p1=[[950,700],[2125,700],[2125,900]]
-  //  const p2=[[950,700],[2125,700]]
-  //   const p3=[[2125,700],[2125,900]]
-  // var p1=[];
-  // var p2=[];
-  // var p3=[];
-
-
   const [p1, setP1] = useState([])
   const [p2, setP2] = useState([])
   const [p3, setP3] = useState([])
@@ -48,9 +38,6 @@ function Cse() {
   const [sliderValue, setSliderValue] = useState(0);
   const [floorImg, setFloorImage] = useState(0);
   const [floorPath, setFloorPath] = useState(p1);
-  const [locationImg, setLocationImg] = useState(0);
-  const [centerX, setCenterX] = useState(0);
-  const [centerY, setCenterY] = useState(0);
 
   // const [loc,setLoc] =useState(0);
 
@@ -78,9 +65,6 @@ function Cse() {
       setFloorPath([])
       setFloorImage(0)
       slider = 0
-      // setFloorImage(slider);
-      // setCurrentImage(floorData[slider]);
-      // setSliderValue(slider * 50);
       sessionStorage.removeItem("cancel");
     }
 
@@ -92,9 +76,6 @@ function Cse() {
       sessionStorage.removeItem("src");
       sessionStorage.removeItem("dest");
       slider=0
-      // setFloorImage(slider);
-      // setCurrentImage(floorData[slider]);
-      // setSliderValue(slider * 50);
     };
     window.addEventListener('beforeunload', handleRefresh);
 
@@ -120,7 +101,7 @@ function Cse() {
 
     fetchData();
     imageLoad(canvas, context, img)
-    plotPath(context, floorPath);
+    // plotPath(context, floorPath);
   }
 
   const fetchData = async () => {
@@ -197,7 +178,7 @@ function Cse() {
 
       }, 3000);
 
-      plotPath(context, floorPath);
+      plotPath(context, floorPath,9);
     }
   }
 
@@ -217,7 +198,7 @@ function Cse() {
   ];
 
   const shortestPath = async (src, dest) => {
-    if (src[0] !== 'C' && src[1] !== 'S') {
+    if (!(src[0] === 'C' && src[1] === 'S')) {
       src = "CS_start"
     }
 
@@ -259,11 +240,6 @@ function Cse() {
     spath = 0;
     shortestPath(src, dest).then(res => {
       console.log("shortest path complete")
-      // slider=sz
-      // console.log("slider")
-      // setFloorImage(slider);
-      // setCurrentImage(floorData[slider]);
-      // setSliderValue(slider * 50);
 
     })
   }
@@ -359,6 +335,7 @@ function Cse() {
             onChange={handleImageChange}
           />
         </div>
+        
       </div>
   );
 }

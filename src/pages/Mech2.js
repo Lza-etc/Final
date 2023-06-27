@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {Nav,Button,Form} from "react-bootstrap";
-import "../styles/Mech2.css";
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
@@ -34,6 +34,7 @@ function Mech2() {
   const [p2, setP2] = useState([])
   const [p3, setP3] = useState([])
   const [sliderValue, setSliderValue] = useState(0);
+  const [floorPath, setFloorPath] = useState(p1);
   const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/me2_0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/me2_1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/me2_2.png"];
   const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/me2_0.png");
   const [floorImg, setFloorImage] = useState(0);
@@ -164,8 +165,8 @@ function Mech2() {
     // console.log("image load")
     img.onload = () => {
       // console.log("image load inside")
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+      canvas.width = img.naturalWidth*3;
+      canvas.height = img.naturalHeight*3;
       context.drawImage(img, 0, 0, canvas.width, canvas.height);
       context.lineWidth = 20;
       context.strokeStyle = "red";
@@ -306,7 +307,7 @@ function Mech2() {
           </Link>
       </div>
       <div className="dept-mid">
-        <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)" }} />
+        <canvas ref={canvasRef} style={{ height: "calc(100vh - 100px)" }} />
       </div>
       <div className="dept-right">
         <Slider

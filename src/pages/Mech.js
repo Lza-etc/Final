@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // import a1 from "../assets/images/me_1.png";
 // import a2 from "../assets/images/me_2.png";
 import {Nav,Button,Form} from "react-bootstrap";
-import "../styles/Mech.css";
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
@@ -212,7 +212,7 @@ function Mech() {
 
   
  const shortestPath=async(src,dest)=>{
-  if(src[0]!=='A'||src[0]!=='C'){
+  if(!(src[0]==='A'||src[0]==='C')){
     src="ATM"
   }
   
@@ -233,7 +233,7 @@ function Mech() {
       if(p.path[0])
         setP1(Array.from(p.path[0], x => [3.6*x[0], 3.6*x[1]]))
       if(p.path[1])
-        setP2(Array.from(p.path[1], x => [3.6*x[0], 3.6*x[1]]))
+        setP2(Array.from(p.path[1], x => [0.6*x[0], 0.6*x[1]]))
       if(p.path[2])
         setP3(Array.from(p.path[2], x => [3.6*x[0], 3.6*x[1]]))
       // console.log(p1,p2,p3)
@@ -323,7 +323,7 @@ if(src && dest && spath){
             </Link>
         </div>
         <div className="dept-mid">
-          <canvas ref={canvasRef}/>
+          <canvas ref={canvasRef} />
         </div>
         <div className="dept-right">
           <Slider

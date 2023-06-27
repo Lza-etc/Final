@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import  {Link} from "react-router-dom"
-import "../styles/Ec2.css"
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
@@ -31,6 +31,7 @@ function Ec2(){
   const [p2, setP2] = useState([])
   const [p3, setP3] = useState([])
   const [sliderValue, setSliderValue] = useState(0);
+  const [floorPath, setFloorPath] = useState(p1);
   const floorData = ["https://raw.githubusercontent.com/Lza-etc/imageData/main/ec2_0.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/ec2_1.png", "https://raw.githubusercontent.com/Lza-etc/imageData/main/ec2_2.png"];
   const [currentImage, setCurrentImage] = useState("https://raw.githubusercontent.com/Lza-etc/imageData/main/ec1_0.png");
   const [floorImg, setFloorImage] = useState(0);
@@ -265,59 +266,58 @@ function Ec2(){
   };
 
   return(
-    <div>
-      <div className="Ec2-main">
-        <div className='Ec2-left text-center'>
-          <Link to="/CSE" className='left-nav-links'>
-            CSE
-            </Link>
-            <Link to="/MCA" className='left-nav-links '>
-            MCA
-            </Link>
-            <Link to="/CIVIL" className='left-nav-links'>
-            CIVIL
-            </Link>
-            <Link to="/CIVIL2" className='left-nav-links'>
-            CIVIL-II
-            </Link>
-            <Link to="/Arch" className='left-nav-links'>
-            ARCHIE
-            </Link>
-            <Link to="/MAIN" className='left-nav-links'>
-            MECH
-            </Link>
-            <Link to="/MAIN2" className='left-nav-links'>
-            MECH-II
-            </Link>
-            <Link to="/EEE" className='left-nav-links'>
-            EEE
-            </Link>
-            <Link to="/EC" className="left-nav-links">
-            EC
+    <div className="dept-main">
+      <div className='dept-left text-center'>
+        <Link to="/CSE" className='left-nav-links'>
+          CSE
           </Link>
-            <Link to="/EC2" className='left-nav-links'>
-            EC-II
-            </Link>
-        </div>
-        <div className="d-flex justify-content-around w-100">
-          <div className="Ec2-mid">
-            <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)" }} />
-          </div>
-          <div className="Ec2-right">
-            <Slider
-            aria-label="Custom marks"
-            defaultValue={0}
-            step={50}
-            orientation="vertical"
-            value={sliderValue}
-            valueLabelDisplay="off"
-            marks={marks}
-            onChange={handleImageChange}
-            />
-          </div>
-        </div>
-    </div>
+          <Link to="/MCA" className='left-nav-links '>
+          MCA
+          </Link>
+          <Link to="/CIVIL" className='left-nav-links'>
+          CIVIL
+          </Link>
+          <Link to="/CIVIL2" className='left-nav-links'>
+          CIVIL-II
+          </Link>
+          <Link to="/Arch" className='left-nav-links'>
+          ARCHIE
+          </Link>
+          <Link to="/MAIN" className='left-nav-links'>
+          MECH
+          </Link>
+          <Link to="/MAIN2" className='left-nav-links'>
+          MECH-II
+          </Link>
+          <Link to="/EEE" className='left-nav-links'>
+          EEE
+          </Link>
+          <Link to="/EC" className="left-nav-links">
+          EC
+        </Link>
+          <Link to="/EC2" className='left-nav-links'>
+          EC-II
+          </Link>
+      </div>
+      <div className="dept-mid">
+        <canvas ref={canvasRef} style={{ height: "calc(100vh - 71px)" }} />
+      </div>
+      <div className="dept-right">
+        <Slider
+        aria-label="Custom marks"
+        defaultValue={0}
+        step={50}
+        orientation="vertical"
+        value={sliderValue}
+        valueLabelDisplay="off"
+        marks={marks}
+        onChange={handleImageChange}
+        />
+      </div>
+      <div className="dept-path">
+      </div>
+
   </div>
-  );
+);
 }
 export default Ec2;

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom"
-import "../styles/Mca.css"
+import "../styles/dept.css";
 import axios from "axios";
 import { Slider } from "@mui/material";
 import splitPath from "./path_split.js";
@@ -205,7 +205,7 @@ function Mca() {
 
 
  const shortestPath=async(src,dest)=>{
-    if(!(src[0]==='C'&&src[1]==='A')||!(src[0]==='M'&&src[1]==='C'&&src[2]==='A')||!(src[0]==='D'&&src[1]==='C'&&src[2]=='A')){
+    if(!((src[0]==='C'&&src[1]==='A')||(src[0]==='M'&&src[1]==='C'&&src[2]==='A')||(src[0]==='D'&&src[1]==='C'&&src[2]=='A'))){
       src="CA_101"
     }
     

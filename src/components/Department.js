@@ -5,7 +5,7 @@ import data  from "../assets/cet_main.json"
 import {Nav,Button,Form,Col,Row} from "react-bootstrap";
 import "../styles/Department.css"
 import  {Link} from "react-router-dom"
-// import BaseData from "../hooks/getFloorData"
+  
 
 const DeptMap= (props) => {
   // Map state:
@@ -13,6 +13,7 @@ const DeptMap= (props) => {
   const [marker, setMarker] = useState(null);
   const [value,setValue]=useState(null)
   
+
   // Map refs:
   const mapRef = useRef(null);
   const tileRef = useRef(null);
@@ -88,20 +89,35 @@ const DeptMap= (props) => {
       
      <div className='d-flex dept-main'>
       <div className='dept-left text-center'>
-            <Link to="/CSE" className='left-nav-links'>
+      <Link to="/CSE" className='left-nav-links'>
             CSE
             </Link>
-            <Link to="/MCA" className='left-nav-links'>
+            <Link to="/MCA" className='left-nav-links '>
             MCA
-            </Link>
-            <Link to="/MAIN" className='left-nav-links'>
-            MECH
             </Link>
             <Link to="/CIVIL" className='left-nav-links'>
             CIVIL
             </Link>
+            <Link to="/CIVIL2" className='left-nav-links'>
+            CIVIL-II
+            </Link>
+            <Link to="/Arch" className='left-nav-links'>
+            ARCHIE
+            </Link>
+            <Link to="/MAIN" className='left-nav-links'>
+            MECH
+            </Link>
+            <Link to="/MAIN2" className='left-nav-links'>
+            MECH-II
+            </Link>
             <Link to="/EEE" className='left-nav-links'>
             EEE
+            </Link>
+            <Link to="/EC" className="left-nav-links">
+            EC
+          </Link>
+            <Link to="/EC2" className='left-nav-links'>
+            EC-II
             </Link>
       </div>
      <div className='p-0 dept-right' >

@@ -104,7 +104,8 @@ export default class CetMap extends Component {
       'http://127.0.0.1:5000/floors/ec1',
       'http://127.0.0.1:5000/floors/ec2',
       'http://127.0.0.1:5000/floors/ce1',
-      // 'http://127.0.0.1:5000/floors/ce2',
+      'http://127.0.0.1:5000/floors/ce2',
+      'http://127.0.0.1:5000/floors/arch',
       'http://127.0.0.1:5000/floors/me1',
       'http://127.0.0.1:5000/floors/me2',
     ];

@@ -115,7 +115,7 @@ function Arch() {
 
     if (!data) {
 
-      await axios.get("http://127.0.0.1:5000/floors/eee").then(res=>{
+      await axios.get("http://127.0.0.1:5000/floors/arch").then(res=>{
         console.log(res)
         setData(res);
     })
@@ -218,7 +218,7 @@ function Arch() {
       await axios.post('http://127.0.0.1:5000/shortestpath', { 
         src:src,
         dest:dest,
-        dept:"eee"
+        dept:"arch"
        },{
         headers: {
           'Content-Type': 'application/json'

@@ -45,10 +45,13 @@ function Mca() {
   const src=sessionStorage.getItem("src")
   const dest=sessionStorage.getItem("dest")
   const dept=sessionStorage.getItem("dept")
+
+  const navi=sessionStorage.getItem("navi")
   const cancel = sessionStorage.getItem("cancel")
   const [data,setData]=useState([])
 
   useEffect(() => {
+    
     console.log("useEffect");
     spath=sessionStorage.getItem("spath");
     // setLoc(sessionStorage.getItem("loc"));
@@ -69,6 +72,14 @@ function Mca() {
       // setCurrentImage(floorData[slider]);
       // setSliderValue(slider * 50);
       sessionStorage.removeItem("cancel");
+    }
+
+    if(navi && src && dest){
+      shortestPath(src, dest).then(res => {
+        console.log("shortest path complete")
+
+      })
+
     }
 
     executeCode()

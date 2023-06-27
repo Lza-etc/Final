@@ -176,6 +176,10 @@ export default class CetMap extends Component {
   // }
 
   searchLoc = async (val) => {
+    // await axios.get("http://127.0.0.1:5000/point/"+val).then(res=>{
+    //   console.log("fuzzy output",res)
+    // }
+    // )
 
     this.setState({
       srch: false
@@ -315,7 +319,7 @@ export default class CetMap extends Component {
       this.setState({
         lat: this.state.endLa,
         lng: this.state.endLo,
-        zoom: 18.5
+        zoom: 18.25
       });
     };
 
@@ -455,6 +459,7 @@ export default class CetMap extends Component {
                       weight: 1}}> */}
 
                     {/* </div> */}
+                    <Tooltip direction="top" offset={[0, -35]} permanent>{this.state.popup}</Tooltip>
 
                   </Marker>
                 </div>
@@ -482,11 +487,10 @@ export default class CetMap extends Component {
 
                   onClick={this.handleRedirect}
 
-                > */}
-                  {/* <Tooltip permanent>{this.state.popup}</Tooltip>
-                </Polygon> */}
+                >
+                  <Tooltip direction="top" offset={[0, -35]} permanent>{this.state.popup}</Tooltip>
 
-
+                  </Polygon> */}
                 </Marker>
               </div>
 
